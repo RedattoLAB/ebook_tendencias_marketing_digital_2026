@@ -1,0 +1,3287 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kit Corretor Digital 2026</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            padding: 20px;
+        }
+        
+        .page {
+            width: 210mm;
+            height: 297mm;
+            background: white;
+            margin: 0 auto 20px;
+            padding: 25mm 20mm 20mm 20mm;
+            box-shadow: 0 10px 40px rgba(8, 77, 110, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Efeito de brilho nas bordas */
+        .page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #daa520, transparent);
+        }
+        
+        .page-number {
+            position: absolute;
+            bottom: 15mm;
+            right: 20mm;
+            font-size: 11px;
+            color: #084d6e;
+            font-weight: 600;
+        }
+        
+        /* BOTÃO COPIAR PROMPT */
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(135deg, #daa520 0%, #b8860b 100%);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(218, 165, 32, 0.3);
+            z-index: 10;
+        }
+        
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(218, 165, 32, 0.5);
+            background: linear-gradient(135deg, #e5b733 0%, #c99a1f 100%);
+        }
+        
+        .copy-btn:active {
+            transform: translateY(0);
+        }
+        
+        .copy-feedback {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            z-index: 9999;
+            animation: slideIn 0.3s ease, slideOut 0.3s ease 2.7s;
+            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4);
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(400px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(400px); opacity: 0; }
+        }
+        
+        .prompt-box {
+            position: relative;
+        }
+        
+        /* PÁGINA DE CAPA */
+        .cover {
+            background: linear-gradient(135deg, #000000 0%, #084d6e 50%, #0a5f7d 100%);
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Efeito de partículas de fundo */
+        .cover::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: radial-gradient(circle, rgba(218, 165, 32, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.3;
+        }
+        
+        .cover-badge {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #daa520 0%, #b8860b 100%);
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            box-shadow: 0 6px 20px rgba(218, 165, 32, 0.5);
+            z-index: 2;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .cover-content {
+            text-align: center;
+            padding: 0 40px;
+            z-index: 2;
+        }
+        
+        .cover-emoji {
+            font-size: 90px;
+            margin-bottom: 30px;
+            display: block;
+            filter: drop-shadow(0 6px 12px rgba(218, 165, 32, 0.4));
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .cover h1 {
+            font-size: 56px;
+            font-weight: 900;
+            margin-bottom: 25px;
+            line-height: 1.1;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #ffffff 0%, #daa520 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .cover-subtitle {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 50px;
+            opacity: 0.95;
+            line-height: 1.4;
+        }
+        
+        .cover-author {
+            font-size: 17px;
+            font-weight: 500;
+            opacity: 0.85;
+            margin-top: 80px;
+            padding-top: 30px;
+            border-top: 2px solid rgba(218, 165, 32, 0.5);
+        }
+        
+        .cover-footer {
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 14px;
+            opacity: 0.7;
+            z-index: 2;
+        }
+        
+        /* PÁGINA PADRÃO */
+        h2 {
+            font-size: 36px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #084d6e 0%, #000000 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 25px;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #daa520 0%, transparent 100%);
+            border-radius: 2px;
+        }
+        
+        h3 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #084d6e;
+            margin: 25px 0 15px 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        h3::before {
+            content: "";
+            display: inline-block;
+            width: 4px;
+            height: 24px;
+            background: linear-gradient(180deg, #daa520 0%, #b8860b 100%);
+            margin-right: 12px;
+            border-radius: 2px;
+            box-shadow: 0 2px 4px rgba(218, 165, 32, 0.3);
+        }
+        
+        p {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+        
+        .intro-text {
+            font-size: 16px;
+            line-height: 1.9;
+            color: #1a202c;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(8, 77, 110, 0.08) 0%, rgba(218, 165, 32, 0.08) 100%);
+            border-left: 5px solid #daa520;
+            padding: 22px;
+            margin: 25px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(8, 77, 110, 0.12);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .highlight-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(218, 165, 32, 0.05));
+        }
+        
+        .checklist {
+            margin: 20px 0;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 14px;
+            font-size: 15px;
+            color: #1a202c;
+            line-height: 1.6;
+        }
+        
+        .checklist-item::before {
+            content: "✅";
+            margin-right: 14px;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        
+        .table-container {
+            margin: 25px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(8, 77, 110, 0.15);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #084d6e 0%, #000000 100%);
+            color: white;
+            padding: 14px 12px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #2d3748;
+        }
+        
+        tr:hover {
+            background: rgba(218, 165, 32, 0.05);
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .priority-badge {
+            display: inline-block;
+            padding: 5px 14px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+        
+        .priority-1 { 
+            background: linear-gradient(135deg, #daa520 0%, #b8860b 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(218, 165, 32, 0.4);
+        }
+        .priority-2 { 
+            background: linear-gradient(135deg, #c0c0c0 0%, #a8a8a8 100%);
+            color: #1a202c;
+            box-shadow: 0 2px 6px rgba(192, 192, 192, 0.3);
+        }
+        .priority-3 { 
+            background: linear-gradient(135deg, #cd7f32 0%, #b86f28 100%);
+            color: white;
+            box-shadow: 0 2px 6px rgba(205, 127, 50, 0.3);
+        }
+        .priority-4 { 
+            background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e0 100%);
+            color: #084d6e;
+            font-weight: 600;
+        }
+        
+        .stars {
+            color: #daa520;
+            font-size: 14px;
+            text-shadow: 0 1px 2px rgba(218, 165, 32, 0.3);
+        }
+        
+        /* MANTENDO DIMENSÕES ORIGINAIS DOS PATH-CARDS */
+        .path-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 12px 0;
+            box-shadow: 0 2px 8px rgba(8, 77, 110, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .path-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(218, 165, 32, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .path-card:hover::before {
+            left: 100%;
+        }
+        
+        .path-card:hover {
+            border-color: #daa520;
+            box-shadow: 0 4px 15px rgba(218, 165, 32, 0.15);
+        }
+        
+        .path-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #084d6e;
+            margin-bottom: 8px;
+        }
+        
+        .path-card p {
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+        
+        .path-card .checklist-item {
+            font-size: 12px;
+            margin-bottom: 7px;
+            line-height: 1.4;
+        }
+        
+        .path-card .checklist-item::before {
+            font-size: 14px;
+            margin-right: 8px;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .page {
+                margin: 0;
+                box-shadow: none;
+                page-break-after: always;
+            }
+            .copy-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PÁGINA 1: CAPA -->
+    <div class="page cover">
+        <div class="cover-badge">🏆 EDIÇÃO 2026</div>
+        
+        <div style="position: absolute; top: 40px; left: 50%; transform: translateX(-50%); z-index: 3;">
+            <img src="https://redattolab.com.br/wp-content/uploads/2025/09/RedattoLAB-400-x-150-px.png" alt="RedattoLAB" style="height: 60px; width: auto; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+        </div>
+        
+        <div class="cover-content">
+            <span class="cover-emoji">🚀</span>
+            <h1>Kit Corretor<br>Digital 2026</h1>
+            <div class="cover-subtitle">
+                15 prompts profissionais de IA<br>para corretores
+            </div>
+            <div class="cover-author">
+                Por RedattoLAB | Transforme sua comunicação imobiliária<br>com Inteligência Artificial
+            </div>
+        </div>
+        
+        <div class="cover-footer">
+            @redattolab
+        </div>
+    </div>
+
+    <!-- PÁGINA 2: SUMÁRIO VISUAL POR CATEGORIA -->
+    <div class="page">
+        <h2>📑 Sumário</h2>
+        
+        <p class="intro-text">
+            Navegue rapidamente pelos 15 prompts organizados por categoria e objetivo.
+        </p>
+        
+        <div style="background: linear-gradient(135deg, rgba(8, 77, 110, 0.08) 0%, rgba(218, 165, 32, 0.08) 100%); border-left: 5px solid #daa520; padding: 20px; margin: 25px 0; border-radius: 10px;">
+            <h3 style="margin-top: 0;">📝 Descrições de imóveis</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px;">
+                <div style="background: white; padding: 10px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+                    <a href="#prompt1" style="text-decoration: none; color: #084d6e; font-weight: 600; font-size: 13px;">1. Descrição magnética</a>
+                    <p style="margin: 4px 0 0 0; font-size: 11px; color: #4a5568;">Para anúncios que vendem</p>
+                </div>
+                <div style="background: white; padding: 10px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+                    <a href="#prompt2" style="text-decoration: none; color: #084d6e; font-weight: 600; font-size: 13px;">2. Descrição redes sociais</a>
+                    <p style="margin: 4px 0 0 0; font-size: 11px; color: #4a5568;">Posts rápidos e atrativos</p>
+                </div>
+                <div style="background: white; padding: 10px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+                    <a href="#prompt3" style="text-decoration: none; color: #084d6e; font-weight: 600; font-size: 13px;">3. Descrição técnica</a>
+                    <p style="margin: 4px 0 0 0; font-size: 11px; color: #4a5568;">Para clientes exigentes</p>
+                </div>
+            </div>
+        </div>
+        
+        <div style="background: linear-gradient(135deg, rgba(8, 77, 110, 0.08) 0%, rgba(218, 165, 32, 0.08) 100%); border-left: 5px solid #084d6e; padding: 20px; margin: 20px 0; border-radius: 10px;">
+            <h3 style="margin-top: 0;">📱 Redes sociais</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px;">
+                <div style="background: white; padding: 10px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+                    <a href="#prompt4" style="text-decoration: none; color: #084d6e; font-weight: 600; font-size: 13px;">4. Carrossel educativo</a>
+                    <p style="margin: 4px 0 0 0; font-size: 11px; color: #4a5568;">Conteúdo que viraliza</p>
+                </div>
+                <div style="background: white; padding: 10px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+                    <a href="#prompt5" style="text-decoration: none; color: #084d6e; font-weight: 600; font-size: 13px;">5. Legenda engajadora</a>
+                    <p style="margin: 4px 0 0 0; font-size: 11px; color: #4a5568;">Posts que conectam</p>
+                </div>
+                <div style="background: white; padding: 10px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+                    <a href="#prompt6" style="text-decoration: none; color: #084d6e; font-weight: 600; font-size: 13px;">6. Stories com CTA</a>
+                    <p style="margin: 4px 0 0 0; font-size: 11px; color: #4a5568;">Sequências que convertem</p>
+                </div>
+                <div style="background: white; padding: 10px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+                    <a href="#prompt7" style="text-decoration: none; color: #084d6e; font-weight: 600; font-size: 13px;">7. Post dica rápida</a>
+                    <p style="margin: 4px 0 0 0; font-size: 11px; color: #4a5568;">Autoridade em minutos</p>
+                </div>
+            </div>
+        </div>
+        
+        <div style="background: linear-gradient(135deg, rgba(8, 77, 110, 0.08) 0%, rgba(218, 165, 32, 0.08) 100%); border-left: 5px solid #daa520; padding: 20px; margin: 20px 0; border-radius: 10px;">
+            <h3 style="margin-top: 0;">🎥 Vídeos</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px;">
+                <div style="background: white; padding: 10px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+                    <a href="#prompt8" style="text-decoration: none; color: #084d6e; font-weight: 600; font-size: 13px;">8. Tour virtual</a>
+                    <p style="margin: 4px 0 0 0; font-size: 11px; color: #4a5568;">Roteiro profissional</p>
+                </div>
+                <div style="background: white; padding: 10px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+                    <a href="#prompt9" style="text-decoration: none; color: #084d6e; font-weight: 600; font-size: 13px;">9. Reels/TikTok</a>
+                    <p style="margin: 4px 0 0 0; font-size: 11px; color: #4a5568;">Conteúdo viral</p>
+                </div>
+                <div style="background: white; padding: 10px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+                    <a href="#prompt10" style="text-decoration: none; color: #084d6e; font-weight: 600; font-size: 13px;">10. Testemunho cliente</a>
+                    <p style="margin: 4px 0 0 0; font-size: 11px; color: #4a5568;">Prova social autêntica</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="page-number">2</div>
+    </div>
+
+    <!-- PÁGINA 3: ÍNDICE COMPLETO -->
+    <div class="page">
+        <h2>📑 Índice completo</h2>
+        
+        <div style="background: linear-gradient(135deg, rgba(8, 77, 110, 0.08) 0%, rgba(218, 165, 32, 0.08) 100%); border-left: 5px solid #084d6e; padding: 20px; margin: 20px 0; border-radius: 10px;">
+            <h3 style="margin-top: 0;">📧 E-mails estratégicos</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px;">
+                <div style="background: white; padding: 10px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+                    <a href="#prompt11" style="text-decoration: none; color: #084d6e; font-weight: 600; font-size: 13px;">11. Follow-up pós-visita</a>
+                    <p style="margin: 4px 0 0 0; font-size: 11px; color: #4a5568;">Não perca leads quentes</p>
+                </div>
+                <div style="background: white; padding: 10px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+                    <a href="#prompt12" style="text-decoration: none; color: #084d6e; font-weight: 600; font-size: 13px;">12. Reativação lead frio</a>
+                    <p style="margin: 4px 0 0 0; font-size: 11px; color: #4a5568;">Recupere contatos antigos</p>
+                </div>
+                <div style="background: white; padding: 10px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+                    <a href="#prompt13" style="text-decoration: none; color: #084d6e; font-weight: 600; font-size: 13px;">13. Última chamada</a>
+                    <p style="margin: 4px 0 0 0; font-size: 11px; color: #4a5568;">Urgência genuína</p>
+                </div>
+            </div>
+        </div>
+        
+        <div style="background: linear-gradient(135deg, rgba(8, 77, 110, 0.08) 0%, rgba(218, 165, 32, 0.08) 100%); border-left: 5px solid #daa520; padding: 20px; margin: 20px 0; border-radius: 10px;">
+            <h3 style="margin-top: 0;">📊 Estratégia e planejamento</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px;">
+                <div style="background: white; padding: 10px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+                    <a href="#prompt14" style="text-decoration: none; color: #084d6e; font-weight: 600; font-size: 13px;">14. Análise concorrência</a>
+                    <p style="margin: 4px 0 0 0; font-size: 11px; color: #4a5568;">Encontre oportunidades</p>
+                </div>
+                <div style="background: white; padding: 10px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+                    <a href="#prompt15" style="text-decoration: none; color: #084d6e; font-weight: 600; font-size: 13px;">15. Estratégia mensal</a>
+                    <p style="margin: 4px 0 0 0; font-size: 11px; color: #4a5568;">Organize todo seu trabalho</p>
+                </div>
+            </div>
+        </div>
+        
+        <div style="background: linear-gradient(135deg, #000000 0%, #084d6e 100%); color: white; padding: 25px; border-radius: 10px; margin: 30px 0 20px 0; text-align: center;">
+            <p style="margin: 0; font-size: 18px; font-weight: 700; color: #daa520;">🎯 Por onde começar?</p>
+            <p style="margin: 10px 0 0 0; font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.9);">
+                Vá para a <a href="#page4" style="color: #daa520; text-decoration: underline;">página 4</a> e escolha seu caminho baseado no seu objetivo principal
+            </p>
+        </div>
+        
+        <div class="page-number">3</div>
+    </div>
+
+    <!-- PÁGINA 4: BEM-VINDO -->
+    <div class="page">
+        <h2>🎯 Bem-vindo ao seu kit de 15 prompts profissionais</h2>
+        
+        <p class="intro-text">
+            Este é um guia completo para corretores que querem vender mais, em menos tempo, com muito mais profissionalismo.
+        </p>
+        
+        <h3>O que você vai encontrar aqui:</h3>
+        
+        <div class="checklist">
+            <div class="checklist-item">15 prompts prontos para usar</div>
+            <div class="checklist-item">Guias práticos de implementação</div>
+            <div class="checklist-item">Estratégias testadas e aprovadas</div>
+            <div class="checklist-item">Resultados mensuráveis</div>
+        </div>
+        
+        <h2 style="margin-top: 45px;">📋 Top 5 - Comece por aqui</h2>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 15%;">Prioridade</th>
+                        <th style="width: 30%;">Prompt</th>
+                        <th style="width: 40%;">Por que usar</th>
+                        <th style="width: 15%;">Impacto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="priority-badge priority-1">🥇 1º</span></td>
+                        <td><strong>Descrição magnética</strong></td>
+                        <td>Aumenta conversão de anúncios em 30%</td>
+                        <td><span class="stars">⭐⭐⭐⭐⭐</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="priority-badge priority-2">🥈 2º</span></td>
+                        <td><strong>Follow-up pós-visita</strong></td>
+                        <td>Recupera leads que você perderia</td>
+                        <td><span class="stars">⭐⭐⭐⭐⭐</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="priority-badge priority-3">🥉 3º</span></td>
+                        <td><strong>Legenda engajadora</strong></td>
+                        <td>Triplica engajamento nas redes</td>
+                        <td><span class="stars">⭐⭐⭐⭐⭐</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="priority-badge priority-4">4º</span></td>
+                        <td><strong>Tour virtual</strong></td>
+                        <td>Diferencial que ninguém tem</td>
+                        <td><span class="stars">⭐⭐⭐⭐⭐</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="priority-badge priority-4">5º</span></td>
+                        <td><strong>Estratégia mensal</strong></td>
+                        <td>Organiza todo seu trabalho</td>
+                        <td><span class="stars">⭐⭐⭐⭐⭐</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="page-number">4</div>
+    </div>
+
+    <!-- PÁGINA 5: TODOS OS 15 PROMPTS -->
+    <div class="page" id="page4">
+        <h2>📊 Todos os 15 prompts</h2>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 5%;">#</th>
+                        <th style="width: 30%;">Nome</th>
+                        <th style="width: 20%;">Categoria</th>
+                        <th style="width: 15%;">Uso</th>
+                        <th style="width: 12%;">Tempo</th>
+                        <th style="width: 18%;">Impacto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>1</strong></td>
+                        <td><strong>Descrição magnética</strong></td>
+                        <td>Descrição</td>
+                        <td>Diário</td>
+                        <td>2min</td>
+                        <td><span class="stars">⭐⭐⭐⭐⭐</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>2</strong></td>
+                        <td><strong>Descrição redes sociais</strong></td>
+                        <td>Descrição</td>
+                        <td>Diário</td>
+                        <td>1min</td>
+                        <td><span class="stars">⭐⭐⭐⭐</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>3</strong></td>
+                        <td><strong>Descrição técnica</strong></td>
+                        <td>Descrição</td>
+                        <td>Semanal</td>
+                        <td>3min</td>
+                        <td><span class="stars">⭐⭐⭐⭐</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>4</strong></td>
+                        <td><strong>Carrossel educativo</strong></td>
+                        <td>Redes sociais</td>
+                        <td>Semanal</td>
+                        <td>5min</td>
+                        <td><span class="stars">⭐⭐⭐⭐⭐</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>5</strong></td>
+                        <td><strong>Legenda engajadora</strong></td>
+                        <td>Redes sociais</td>
+                        <td>3-5x/sem</td>
+                        <td>2min</td>
+                        <td><span class="stars">⭐⭐⭐⭐⭐</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>6</strong></td>
+                        <td><strong>Stories com CTA</strong></td>
+                        <td>Redes sociais</td>
+                        <td>Diário</td>
+                        <td>3min</td>
+                        <td><span class="stars">⭐⭐⭐⭐</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>7</strong></td>
+                        <td><strong>Post dica rápida</strong></td>
+                        <td>Redes sociais</td>
+                        <td>2x/sem</td>
+                        <td>1min</td>
+                        <td><span class="stars">⭐⭐⭐⭐</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>8</strong></td>
+                        <td><strong>Tour virtual</strong></td>
+                        <td>Vídeo</td>
+                        <td>Semanal</td>
+                        <td>10min</td>
+                        <td><span class="stars">⭐⭐⭐⭐⭐</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>9</strong></td>
+                        <td><strong>Reels/TikTok</strong></td>
+                        <td>Vídeo</td>
+                        <td>2-3x/sem</td>
+                        <td>5min</td>
+                        <td><span class="stars">⭐⭐⭐⭐⭐</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>10</strong></td>
+                        <td><strong>Testemunho cliente</strong></td>
+                        <td>Vídeo</td>
+                        <td>Mensal</td>
+                        <td>15min</td>
+                        <td><span class="stars">⭐⭐⭐⭐⭐</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>11</strong></td>
+                        <td><strong>Follow-up pós-visita</strong></td>
+                        <td>E-mail</td>
+                        <td>Sempre</td>
+                        <td>3min</td>
+                        <td><span class="stars">⭐⭐⭐⭐⭐</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>12</strong></td>
+                        <td><strong>Reativação lead frio</strong></td>
+                        <td>E-mail</td>
+                        <td>Mensal</td>
+                        <td>3min</td>
+                        <td><span class="stars">⭐⭐⭐⭐</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>13</strong></td>
+                        <td><strong>Última chamada</strong></td>
+                        <td>E-mail</td>
+                        <td>Quando necessário</td>
+                        <td>2min</td>
+                        <td><span class="stars">⭐⭐⭐⭐⭐</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>14</strong></td>
+                        <td><strong>Análise concorrência</strong></td>
+                        <td>Estratégia</td>
+                        <td>Trimestral</td>
+                        <td>20min</td>
+                        <td><span class="stars">⭐⭐⭐⭐</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>15</strong></td>
+                        <td><strong>Estratégia mensal</strong></td>
+                        <td>Estratégia</td>
+                        <td>Mensal</td>
+                        <td>30min</td>
+                        <td><span class="stars">⭐⭐⭐⭐⭐</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="page-number">5</div>
+    </div>
+
+    <!-- PÁGINA 6: PROMPT 1 - DESCRIÇÃO MAGNÉTICA -->
+    <div class="page" id="prompt1">
+        <h2>📌 Prompt 1: Descrição magnética de imóveis</h2>
+        
+        <div class="highlight-box">
+            <p style="margin: 0;"><strong>Para que serve:</strong> Criar descrições de anúncios que vendem mais, atraem cliques e geram interesse genuíno.</p>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin: 20px 0;">
+            <div>
+                <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">QUANDO USAR</p>
+                <p style="margin: 5px 0 0 0; font-size: 14px; color: #084d6e; font-weight: 700;">Sempre que cadastrar um novo imóvel</p>
+            </div>
+            <div>
+                <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">TEMPO</p>
+                <p style="margin: 5px 0 0 0; font-size: 14px; color: #084d6e; font-weight: 700;">2 minutos</p>
+            </div>
+            <div>
+                <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">IMPACTO</p>
+                <p style="margin: 5px 0 0 0; font-size: 14px;"><span class="stars">⭐⭐⭐⭐⭐</span> <span style="color: #daa520; font-weight: 700;">(+30% conversão)</span></p>
+            </div>
+        </div>
+        
+        <h3>🎯 O prompt</h3>
+        
+        <div style="background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.7;">
+            <p style="margin: 0 0 12px 0; color: #1a202c;"><strong>Você é um copywriter especializado em marketing imobiliário com 15 anos de experiência.</strong></p>
+            <p style="margin: 0 0 12px 0; color: #1a202c;">Crie uma descrição magnética e persuasiva para o seguinte imóvel:</p>
+            
+            <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">INFORMAÇÕES DO IMÓVEL:</p>
+            <p style="margin: 0; color: #2d3748;">
+                Tipo: [apartamento/casa/terreno/comercial]<br>
+                Localização: [bairro, cidade]<br>
+                Área: [metragem]<br>
+                Quartos: [número]<br>
+                Banheiros: [número]<br>
+                Vagas: [número]<br>
+                Diferencial principal: [o que torna este imóvel único]<br>
+                Público-alvo: [família, investidor, casal jovem, etc.]<br>
+                Preço: [valor ou "sob consulta"]
+            </p>
+        </div>
+        
+        <div class="page-number">6</div>
+    </div>
+
+    <!-- PÁGINA 7: PROMPT 1 - CONTINUAÇÃO -->
+    <div class="page">
+        <div style="background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 0 0 15px 0; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.7;">
+            <p style="margin: 0 0 8px 0; color: #084d6e; font-weight: 700;">ESTRUTURA DA DESCRIÇÃO:</p>
+            <p style="margin: 0 0 12px 0; color: #2d3748;">
+                1. Gancho emocional (1 frase que desperta desejo imediato)<br>
+                2. Benefícios principais (3-4 itens que transformam features em benefícios)<br>
+                3. Diferenciais (o que esse imóvel tem que outros não têm)<br>
+                4. Localização estratégica (conveniências próximas relevantes)<br>
+                5. Call-to-action (urgência sutil e convite para ação)
+            </p>
+            
+            <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">DIRETRIZES:</p>
+            <p style="margin: 0 0 12px 0; color: #2d3748;">
+                - Máximo 200 palavras<br>
+                - Tom: profissional mas caloroso<br>
+                - Foco em benefícios, não apenas características<br>
+                - Use verbos de ação<br>
+                - Crie senso de exclusividade<br>
+                - Evite clichês como "imóvel dos sonhos"<br>
+                - Inclua 1-2 emojis estratégicos (apenas se natural)
+            </p>
+            
+            <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">EXEMPLO DE TOM:</p>
+            <p style="margin: 0; color: #2d3748;">
+                Em vez de: "Apartamento com 3 quartos"<br>
+                Use: "Espaço generoso para sua família crescer, com 3 quartos que acomodam todo o conforto"
+            </p>
+        </div>
+        
+        <h3>✅ Exemplo de uso</h3>
+        
+        <div style="background: #fff8e6; border-left: 4px solid #daa520; padding: 15px; margin: 15px 0; border-radius: 6px;">
+            <p style="margin: 0 0 10px 0; font-size: 13px; color: #084d6e; font-weight: 700;">ENTRADA:</p>
+            <p style="margin: 0; font-size: 13px; line-height: 1.6; color: #2d3748;">
+                Tipo: Apartamento | Localização: Batel, Curitiba | Área: 95m² | Quartos: 3<br>
+                Banheiros: 2 | Vagas: 2 | Diferencial: Varanda gourmet com churrasqueira<br>
+                Público: Família jovem | Preço: R$ 580.000
+            </p>
+        </div>
+        
+        <div class="page-number">7</div>
+    </div>
+
+    <!-- PÁGINA 8: PROMPT 1 - SAÍDA E DICAS -->
+    <div class="page">
+        <div style="background: #e6f7f0; border-left: 4px solid #084d6e; padding: 15px; margin: 0 0 20px 0; border-radius: 6px;">
+            <p style="margin: 0 0 10px 0; font-size: 13px; color: #084d6e; font-weight: 700;">SAÍDA DA IA:</p>
+            <p style="margin: 0; font-size: 13px; line-height: 1.7; color: #1a202c;">
+                "Imagine seus finais de semana na varanda gourmet, enquanto as crianças brincam seguras no quarto ao lado. Este apartamento de 95m² no coração do Batel foi pensado para famílias que valorizam momentos juntos sem abrir mão da privacidade.
+            </p>
+            <p style="margin: 10px 0 0 0; font-size: 13px; line-height: 1.7; color: #1a202c;">
+                ✨ <strong>Por que você vai se apaixonar:</strong><br>
+                • Varanda gourmet com churrasqueira (aquele churrasco de domingo!)<br>
+                • 3 quartos amplos (espaço de sobra para crescer)<br>
+                • 2 vagas de garagem (sem stress no estacionamento)<br>
+                • Condomínio com playground e salão de festas
+            </p>
+            <p style="margin: 10px 0 0 0; font-size: 13px; line-height: 1.7; color: #1a202c;">
+                📍 <strong>Localização estratégica:</strong> A 5 minutos do Colégio Positivo, supermercados, farmácias e parque. Tudo que sua família precisa pertinho.
+            </p>
+            <p style="margin: 10px 0 0 0; font-size: 13px; line-height: 1.7; color: #1a202c;">
+                🔑 <strong>Oportunidade:</strong> Imóvel pronto para morar, documentação em dia, e o melhor: disponível para visita imediata.
+            </p>
+            <p style="margin: 10px 0 0 0; font-size: 13px; line-height: 1.7; color: #1a202c;">
+                Entre em contato agora e agende sua visita. Este apartamento não vai durar muito tempo disponível!"
+            </p>
+        </div>
+        
+        <h3>💡 Dicas de ouro</h3>
+        
+        <div style="background: white; border: 2px solid #daa520; border-radius: 10px; padding: 18px; margin: 15px 0;">
+            <div style="margin-bottom: 12px;">
+                <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">1. Personalize sempre</p>
+                <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Adapte o tom para o perfil do imóvel (luxo vs econômico)</p>
+            </div>
+            <div style="margin-bottom: 12px;">
+                <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">2. Use números específicos</p>
+                <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">"5 minutos" é melhor que "perto"</p>
+            </div>
+            <div style="margin-bottom: 12px;">
+                <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">3. Teste variações</p>
+                <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Crie 2-3 versões e teste qual converte mais</p>
+            </div>
+            <div style="margin-bottom: 12px;">
+                <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">4. Atualize sazonalmente</p>
+                <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">"Piscina perfeita para o verão" vs "Lareira aconchegante"</p>
+            </div>
+            <div style="margin-bottom: 0;">
+                <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">5. Inclua urgência real</p>
+                <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">"Últimas unidades" "Proprietário aceitando proposta"</p>
+            </div>
+        </div>
+        
+        <div class="page-number">8</div>
+    </div>
+
+    <!-- PÁGINA 9: PROMPT 2 - DESCRIÇÃO REDES SOCIAIS -->
+    <div class="page" id="prompt2">
+        <h2>📌 Prompt 2: Descrição para redes sociais</h2>
+        
+        <div class="highlight-box">
+            <p style="margin: 0;"><strong>Para que serve:</strong> Criar posts rápidos e atrativos para Instagram, Facebook e WhatsApp.</p>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin: 20px 0;">
+            <div>
+                <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">QUANDO USAR</p>
+                <p style="margin: 5px 0 0 0; font-size: 14px; color: #084d6e; font-weight: 700;">Divulgação diária nas redes</p>
+            </div>
+            <div>
+                <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">TEMPO</p>
+                <p style="margin: 5px 0 0 0; font-size: 14px; color: #084d6e; font-weight: 700;">1 minuto</p>
+            </div>
+            <div>
+                <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">IMPACTO</p>
+                <p style="margin: 5px 0 0 0; font-size: 14px;"><span class="stars">⭐⭐⭐⭐</span> <span style="color: #daa520; font-weight: 700;">(engajamento)</span></p>
+            </div>
+        </div>
+        
+        <h3>🎯 O prompt</h3>
+        
+        <div style="background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.7;">
+            <p style="margin: 0 0 12px 0; color: #1a202c;">Crie uma descrição curta e impactante para redes sociais do seguinte imóvel:</p>
+            
+            <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">DADOS:</p>
+            <p style="margin: 0 0 12px 0; color: #2d3748;">
+                Tipo: [tipo]<br>
+                Destaque principal: [principal benefício]<br>
+                Preço: [valor]<br>
+                Localização: [onde]<br>
+                Rede social: [Instagram/Facebook/WhatsApp Status]
+            </p>
+            
+            <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">FORMATO:</p>
+            <p style="margin: 0; color: #2d3748;">
+                - 1 frase de impacto inicial<br>
+                - 3-5 bullet points com emojis<br>
+                - 1 CTA forte<br>
+                - Máximo 150 palavras<br>
+                - 3-5 hashtags relevantes
+            </p>
+        </div>
+        
+        <div class="page-number">9</div>
+    </div>
+
+    <!-- PÁGINA 10: PROMPT 2 - CONTINUAÇÃO E EXEMPLO -->
+    <div class="page">
+        <div style="background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 0 0 20px 0; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.7;">
+            <p style="margin: 0 0 8px 0; color: #084d6e; font-weight: 700;">TOM:</p>
+            <p style="margin: 0; color: #2d3748;">
+                - Casual mas profissional<br>
+                - Use emojis estrategicamente<br>
+                - Crie curiosidade<br>
+                - Facilite o compartilhamento
+            </p>
+        </div>
+        
+        <h3>✅ Exemplo</h3>
+        
+        <div style="background: #fff8e6; border-left: 4px solid #daa520; padding: 15px; margin: 15px 0; border-radius: 6px;">
+            <p style="margin: 0 0 8px 0; font-size: 13px; color: #084d6e; font-weight: 700;">ENTRADA:</p>
+            <p style="margin: 0; font-size: 13px; line-height: 1.6; color: #2d3748;">
+                Tipo: Casa | Destaque: Piscina | Preço: R$ 450.000<br>
+                Localização: Itajaí | Rede: Instagram
+            </p>
+        </div>
+        
+        <div style="background: #e6f7f0; border-left: 4px solid #084d6e; padding: 15px; margin: 15px 0; border-radius: 6px;">
+            <p style="margin: 0 0 10px 0; font-size: 13px; color: #084d6e; font-weight: 700;">SAÍDA:</p>
+            <p style="margin: 0; font-size: 13px; line-height: 1.7; color: #1a202c;">
+                🏊‍♂️ <strong>CASA COM PISCINA - R$ 450MIL</strong>
+            </p>
+            <p style="margin: 8px 0 0 0; font-size: 13px; line-height: 1.7; color: #1a202c;">
+                Enquanto você lê isso, alguém já está marcando visita...
+            </p>
+            <p style="margin: 8px 0 0 0; font-size: 13px; line-height: 1.7; color: #1a202c;">
+                🏠 3 quartos (1 suíte)<br>
+                🏊 Piscina nos fundos<br>
+                🚗 2 vagas cobertas<br>
+                📍 Itajaí - Bairro Cordeiros<br>
+                🔑 Documentação em dia
+            </p>
+            <p style="margin: 8px 0 0 0; font-size: 13px; line-height: 1.7; color: #1a202c;">
+                📲 Chama no direct ou WhatsApp!<br>
+                Link na bio para mais fotos 👆
+            </p>
+            <p style="margin: 8px 0 0 0; font-size: 13px; line-height: 1.7; color: #2d3748;">
+                #CasaAVenda #Itajaí #ImóvelPiscina #CasaDosSonhos #ImoveisItajaí
+            </p>
+        </div>
+        
+        <div class="page-number">10</div>
+    </div>
+
+    <!-- PÁGINA 11: PROMPT 3 - DESCRIÇÃO TÉCNICA -->
+    <div class="page" id="prompt3">
+        <h2>📌 Prompt 3: Descrição técnica completa</h2>
+        
+        <div class="highlight-box">
+            <p style="margin: 0;"><strong>Para que serve:</strong> Documentação profissional e detalhada para clientes sérios e investidores.</p>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin: 20px 0;">
+            <div>
+                <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">QUANDO USAR</p>
+                <p style="margin: 5px 0 0 0; font-size: 14px; color: #084d6e; font-weight: 700;">Alto valor, clientes exigentes</p>
+            </div>
+            <div>
+                <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">TEMPO</p>
+                <p style="margin: 5px 0 0 0; font-size: 14px; color: #084d6e; font-weight: 700;">3 minutos</p>
+            </div>
+            <div>
+                <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">IMPACTO</p>
+                <p style="margin: 5px 0 0 0; font-size: 14px;"><span class="stars">⭐⭐⭐⭐</span> <span style="color: #daa520; font-weight: 700;">(credibilidade)</span></p>
+            </div>
+        </div>
+        
+        <h3>🎯 O prompt</h3>
+        
+        <div style="background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.7;">
+            <p style="margin: 0 0 12px 0; color: #1a202c;">Crie uma descrição técnica completa e profissional para o seguinte imóvel:</p>
+            
+            <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">INFORMAÇÕES:</p>
+            <p style="margin: 0 0 12px 0; color: #2d3748; font-size: 12px; line-height: 1.6;">
+                Tipo: [tipo]<br>
+                Localização completa: [endereço, bairro, cidade, CEP]<br>
+                Área total: [m²] | Área construída: [m²] | Área privativa: [m²]<br>
+                Quartos: [número e características]<br>
+                Suítes: [número] | Banheiros: [número] | Vagas: [número e tipo]<br>
+                Ano de construção: [ano] | Posição solar: [norte/sul/leste/oeste]<br>
+                Andar: [se apartamento] | Acabamentos: [detalhes]<br>
+                Estado de conservação: [novo/seminovo/usado/reformado]<br>
+                IPTU: [valor mensal] | Condomínio: [valor mensal]<br>
+                Documentação: [situação]
+            </p>
+            
+            <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">ESTRUTURA:</p>
+            <p style="margin: 0; color: #2d3748; font-size: 12px; line-height: 1.6;">
+                1. Identificação do imóvel (tipo, endereço, metragens)<br>
+                2. Especificações técnicas (divisão de ambientes detalhada)<br>
+                3. Acabamentos e materiais (pisos, revestimentos, esquadrias)<br>
+                4. Infraestrutura do condomínio (se aplicável)<br>
+                5. Aspectos legais (documentação, regularização, taxas)<br>
+                6. Diferenciais técnicos (sistemas, tecnologias, certificações)<br>
+                7. Observações importantes
+            </p>
+        </div>
+        
+        <div class="page-number">11</div>
+    </div>
+
+    <!-- PÁGINA 12: PROMPT 3 - CONTINUAÇÃO E EXEMPLO -->
+<div class="page">
+    <div style="background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 0 0 15px 0; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.7;">
+        <p style="margin: 0 0 8px 0; color: #084d6e; font-weight: 700;">TOM:</p>
+        <p style="margin: 0 0 12px 0; color: #2d3748;">
+            Formal, preciso, objetivo, sem adjetivos emocionais
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">FORMATO:</p>
+        <p style="margin: 0 0 12px 0; color: #2d3748;">
+            Bullets organizados por categorias
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">PÚBLICO:</p>
+        <p style="margin: 0; color: #2d3748;">
+            Investidores, compradores técnicos, avaliadores
+        </p>
+    </div>
+    
+    <h3>✅ Exemplo (resumido)</h3>
+    
+    <div style="background: #e6f7f0; border-left: 4px solid #084d6e; padding: 15px; margin: 15px 0; border-radius: 6px;">
+        <p style="margin: 0 0 10px 0; font-size: 13px; color: #084d6e; font-weight: 700;">SAÍDA DA IA:</p>
+        <p style="margin: 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>APARTAMENTO - BATEL, CURITIBA</strong>
+        </p>
+        <p style="margin: 10px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>IDENTIFICAÇÃO:</strong><br>
+            Endereço: Rua Brigadeiro Franco, 2345, Apto 801<br>
+            Área total: 95,00m² | Área privativa: 82,00m² | Área comum: 13,00m²<br>
+            Posição: Nordeste (sol da manhã) | Andar: 8º de 12 andares
+        </p>
+        <p style="margin: 10px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>DISTRIBUIÇÃO:</strong><br>
+            3 dormitórios (15m², 12m², 10m²) | 1 suíte com closet<br>
+            2 banheiros completos | Sala estar/jantar integradas (30m²)<br>
+            Cozinha planejada (9m²) | Área de serviço (4m²)<br>
+            Sacada gourmet (8m²) | 2 vagas de garagem em linha
+        </p>
+        <p style="margin: 10px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>ACABAMENTOS:</strong><br>
+            Piso: Porcelanato 60x60cm (áreas sociais)<br>
+            Piso: Laminado de madeira (dormitórios)<br>
+            Revestimentos: Porcelanato nos banheiros<br>
+            Esquadrias: Alumínio com vidros duplos<br>
+            Iluminação: LED embutida | Ar-condicionado: Pré-instalação
+        </p>
+        <p style="margin: 10px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>CONDOMÍNIO:</strong><br>
+            Edifício: Residencial Ville de France (2018) | Unidades: 48<br>
+            Infraestrutura: Portaria 24h, salão festas, fitness, playground<br>
+            Valor: R$ 650,00/mês | Sistema: Interfone e câmeras
+        </p>
+        <p style="margin: 10px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>ASPECTOS LEGAIS:</strong><br>
+            Matrícula: Regular e disponível | IPTU: R$ 280,00/mês<br>
+            Proprietário: Pessoa física (único dono)<br>
+            Ônus: Livre e desembaraçado | Habite-se: Regularizado
+        </p>
+    </div>
+    
+    <div class="page-number">12</div>
+</div>
+
+<!-- PÁGINA 13: PROMPT 3 - DIFERENCIAIS E DICAS -->
+<div class="page">
+    <div style="background: #e6f7f0; border-left: 4px solid #084d6e; padding: 15px; margin: 0 0 20px 0; border-radius: 6px;">
+        <p style="margin: 0 0 10px 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>DIFERENCIAIS:</strong><br>
+            Gerador de emergência | Sistema aquecimento solar<br>
+            Medidor de água individual | Gás encanado | Fibra óptica
+        </p>
+        
+        <p style="margin: 10px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>OBSERVAÇÕES:</strong><br>
+            Imóvel em excelente estado de conservação. Recém-pintado. Móveis planejados podem ser negociados. Aceita permuta por imóvel de menor valor. Documentação pronta para financiamento bancário.
+        </p>
+    </div>
+    
+    <h3>💡 Quando usar descrição técnica</h3>
+    
+    <div style="background: white; border: 2px solid #daa520; border-radius: 10px; padding: 18px; margin: 15px 0;">
+        <div style="margin-bottom: 12px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">✅ Use para:</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Imóveis acima de R$ 500 mil | Clientes investidores | Imóveis comerciais | Compradores técnicos ou engenheiros</p>
+        </div>
+        <div style="margin-bottom: 12px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">❌ Evite para:</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Redes sociais | Primeira abordagem | Clientes emocionais | Posts rápidos</p>
+        </div>
+        <div style="margin-bottom: 0;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">💎 Dica profissional:</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Combine a descrição técnica com a magnética: use a magnética para atrair e a técnica para fechar negócio</p>
+        </div>
+    </div>
+    
+    <div class="page-number">13</div>
+</div>
+
+    <!-- PÁGINA 14: PROMPT 4 - CARROSSEL EDUCATIVO -->
+<div class="page" id="prompt4">
+    <h2>📌 Prompt 4: Carrossel educativo para Instagram</h2>
+    
+    <div class="highlight-box">
+        <p style="margin: 0;"><strong>Para que serve:</strong> Criar conteúdo que educa, engaja e posiciona você como autoridade.</p>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin: 20px 0;">
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">QUANDO USAR</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px; color: #084d6e; font-weight: 700;">1-2x por semana</p>
+        </div>
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">TEMPO</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px; color: #084d6e; font-weight: 700;">5 minutos</p>
+        </div>
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">IMPACTO</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px;"><span class="stars">⭐⭐⭐⭐⭐</span> <span style="color: #daa520; font-weight: 700;">(viraliza fácil)</span></p>
+        </div>
+    </div>
+    
+    <h3>🎯 O prompt</h3>
+    
+    <div style="background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.7;">
+        <p style="margin: 0 0 12px 0; color: #1a202c;">Crie um carrossel educativo de 7-10 slides para Instagram sobre o tema:</p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">TEMA:</p>
+        <p style="margin: 0 0 12px 0; color: #2d3748;">
+            [exemplo: "7 erros ao comprar seu primeiro imóvel"]
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">MEU NICHO:</p>
+        <p style="margin: 0 0 12px 0; color: #2d3748;">
+            [exemplo: apartamentos para família, investimentos, etc.]
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">OBJETIVO:</p>
+        <p style="margin: 0; color: #2d3748;">
+            [educar/gerar leads/construir autoridade]
+        </p>
+    </div>
+    
+    <h3>✅ Exemplo de saída</h3>
+    
+    <div style="background: #e6f7f0; border-left: 4px solid #084d6e; padding: 15px; margin: 15px 0; border-radius: 6px;">
+        <p style="margin: 0 0 10px 0; font-size: 13px; color: #084d6e; font-weight: 700;">TEMA: "5 erros que fazem você perder dinheiro ao comprar imóvel"</p>
+        
+        <p style="margin: 10px 0 8px 0; font-size: 12px; color: #084d6e; font-weight: 700;">SLIDE 1 (CAPA):</p>
+        <p style="margin: 0; font-size: 12px; line-height: 1.6; color: #1a202c;">
+            <strong>Texto principal:</strong> 💸 5 ERROS<br>
+            <strong>Texto secundário:</strong> Que fazem você PERDER DINHEIRO ao comprar imóvel<br>
+            <strong>Rodapé:</strong> Deslize para descobrir →
+        </p>
+    </div>
+    
+    <div class="page-number">14</div>
+</div>
+
+    <!-- PÁGINA 15: PROMPT 4 - EXEMPLO COMPLETO -->
+<div class="page">
+    <div style="background: #e6f7f0; border-left: 4px solid #084d6e; padding: 15px; margin: 0 0 15px 0; border-radius: 6px;">
+        <p style="margin: 0 0 8px 0; font-size: 12px; color: #084d6e; font-weight: 700;">SLIDE 2:</p>
+        <p style="margin: 0 0 12px 0; font-size: 12px; line-height: 1.6; color: #1a202c;">
+            <strong>Título:</strong> ❌ Erro #1: Não pesquisar o bairro<br>
+            <strong>Explicação:</strong> Muita gente compra pela foto do imóvel e esquece de pesquisar a região. Resultado? Descobre depois que falta mercado, escola ou transporte. Sempre visite o bairro em diferentes horários antes de decidir.
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; font-size: 12px; color: #084d6e; font-weight: 700;">SLIDE 3:</p>
+        <p style="margin: 0 0 12px 0; font-size: 12px; line-height: 1.6; color: #1a202c;">
+            <strong>Título:</strong> ❌ Erro #2: Não calcular custos extras<br>
+            <strong>Explicação:</strong> IPTU, condomínio, reforma, ITBI... São custos que podem chegar a 20% do valor do imóvel. Faça uma planilha completa antes de se comprometer com a compra.
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; font-size: 12px; color: #084d6e; font-weight: 700;">SLIDE 4:</p>
+        <p style="margin: 0 0 12px 0; font-size: 12px; line-height: 1.6; color: #1a202c;">
+            <strong>Título:</strong> ❌ Erro #3: Pular a vistoria técnica<br>
+            <strong>Explicação:</strong> R$ 300-500 em vistoria podem te economizar milhares em problemas ocultos. Infiltração, cupim, problemas elétricos... Um profissional qualificado identifica tudo isso.
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; font-size: 12px; color: #084d6e; font-weight: 700;">SLIDE 5:</p>
+        <p style="margin: 0 0 12px 0; font-size: 12px; line-height: 1.6; color: #1a202c;">
+            <strong>Título:</strong> ❌ Erro #4: Não negociar o preço<br>
+            <strong>Explicação:</strong> Tudo é negociável! Mesmo imóveis novos têm margem de desconto. Pesquise o valor de mercado, compare com similares e não aceite o primeiro preço. Uma boa negociação pode economizar 10-15%.
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; font-size: 12px; color: #084d6e; font-weight: 700;">SLIDE 6:</p>
+        <p style="margin: 0 0 12px 0; font-size: 12px; line-height: 1.6; color: #1a202c;">
+            <strong>Título:</strong> ❌ Erro #5: Decidir pela emoção<br>
+            <strong>Explicação:</strong> É normal se apaixonar por um imóvel, mas decisões puramente emocionais são perigosas. Durma sobre a decisão, consulte pessoas de confiança e avalie com a cabeça fria.
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; font-size: 12px; color: #084d6e; font-weight: 700;">SLIDE 7 (CTA):</p>
+        <p style="margin: 0; font-size: 12px; line-height: 1.6; color: #1a202c;">
+            <strong>Texto principal:</strong> 🎯 Evite esses erros!<br>
+            <strong>Texto secundário:</strong> Salva esse post para consultar quando for comprar seu imóvel. E me chama no direct se precisar de ajuda para encontrar o lugar perfeito!<br>
+            <strong>Hashtags:</strong> #DicasImobiliarias #CompraDeImovel #PrimeiroImovel
+        </p>
+    </div>
+    
+    <div class="page-number">15</div>
+</div>
+<!-- PÁGINA 16: PROMPT 4 - DICAS E INÍCIO PROMPT 5 -->
+<div class="page" id="prompt5">
+    <h3>💡 Dicas de ouro para carrosséis</h3>
+    
+    <div style="background: white; border: 2px solid #daa520; border-radius: 10px; padding: 18px; margin: 0 0 20px 0;">
+        <div style="margin-bottom: 12px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">1. Teste diferentes formatos</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Listas numeradas performam 40% melhor que outros formatos</p>
+        </div>
+        <div style="margin-bottom: 12px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">2. Use números ímpares</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">"7 dicas" converte melhor que "10 dicas"</p>
+        </div>
+        <div style="margin-bottom: 12px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">3. Capa decide tudo</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">80% das pessoas decidem se vão deslizar pela capa</p>
+        </div>
+        <div style="margin-bottom: 12px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">4. Peça para salvar</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Salvamentos aumentam 300% o alcance do post</p>
+        </div>
+        <div style="margin-bottom: 0;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">5. Republique trimestral</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Conteúdo evergreen pode ser repostado a cada 3 meses</p>
+        </div>
+    </div>
+    
+    <h2>📌 Prompt 5: Legenda engajadora para posts</h2>
+    
+    <div class="highlight-box">
+        <p style="margin: 0;"><strong>Para que serve:</strong> Criar legendas que geram comentários, salvamentos e compartilhamentos.</p>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin: 20px 0;">
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">QUANDO USAR</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px; color: #084d6e; font-weight: 700;">3-5x por semana</p>
+        </div>
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">TEMPO</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px; color: #084d6e; font-weight: 700;">2 minutos</p>
+        </div>
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">IMPACTO</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px;"><span class="stars">⭐⭐⭐⭐⭐</span> <span style="color: #daa520; font-weight: 700;">(engajamento)</span></p>
+        </div>
+    </div>
+    
+    <h3>🎯 O prompt</h3>
+    
+    <div style="background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.7;">
+        <p style="margin: 0 0 12px 0; color: #1a202c;">Crie uma legenda engajadora para Instagram/Facebook sobre:</p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">CONTEXTO:</p>
+        <p style="margin: 0; color: #2d3748;">
+            [descreva o que você vai postar: foto de um imóvel, dica do mercado, bastidor do seu dia, conquista de cliente, etc.]
+        </p>
+    </div>
+    
+    <div class="page-number">16</div>
+</div>
+<!-- PÁGINA 17: PROMPT 5 - CONTINUAÇÃO -->
+<div class="page">
+    <div style="background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 0 0 15px 0; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.7;">
+        <p style="margin: 0 0 8px 0; color: #084d6e; font-weight: 700;">OBJETIVO DA LEGENDA:</p>
+        <p style="margin: 0 0 12px 0; color: #2d3748;">
+            [gerar comentários/educar/vender/construir conexão/entreter]
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">MEU PÚBLICO:</p>
+        <p style="margin: 0 0 12px 0; color: #2d3748;">
+            [quem são seus seguidores: famílias, investidores, jovens compradores, etc.]
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">TOM DESEJADO:</p>
+        <p style="margin: 0 0 12px 0; color: #2d3748;">
+            [inspirador/educativo/casual/profissional/divertido]
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">ESTRUTURA:</p>
+        <p style="margin: 0 0 12px 0; color: #2d3748;">
+            1. Gancho inicial (primeira linha que prende atenção)<br>
+            2. Desenvolvimento (história, dica ou insight)<br>
+            3. Call-to-action claro (o que você quer que façam)<br>
+            4. 3-5 hashtags estratégicas
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">DIRETRIZES:</p>
+        <p style="margin: 0; color: #2d3748;">
+            - Primeira linha DEVE fazer parar o scroll<br>
+            - Use quebras de linha para facilitar leitura<br>
+            - Inclua pergunta para gerar comentários<br>
+            - Emojis com moderação (2-4 no máximo)<br>
+            - Máximo 200 palavras (Instagram corta depois disso)<br>
+            - Seja autêntico, evite linguagem robotizada
+        </p>
+    </div>
+    
+    <h3>✅ Exemplo de uso</h3>
+    
+    <div style="background: #fff8e6; border-left: 4px solid #daa520; padding: 15px; margin: 15px 0; border-radius: 6px;">
+        <p style="margin: 0 0 10px 0; font-size: 13px; color: #084d6e; font-weight: 700;">ENTRADA:</p>
+        <p style="margin: 0; font-size: 13px; line-height: 1.6; color: #2d3748;">
+            Contexto: Foto de uma casa com jardim<br>
+            Objetivo: Gerar comentários e educar<br>
+            Público: Famílias jovens<br>
+            Tom: Inspirador e acolhedor
+        </p>
+    </div>
+    
+    <div class="page-number">17</div>
+</div>
+<!-- PÁGINA 18: PROMPT 5 - EXEMPLO E DICAS -->
+<div class="page">
+    <div style="background: #e6f7f0; border-left: 4px solid #084d6e; padding: 15px; margin: 0 0 20px 0; border-radius: 6px;">
+        <p style="margin: 0 0 10px 0; font-size: 13px; color: #084d6e; font-weight: 700;">SAÍDA DA IA:</p>
+        <p style="margin: 0; font-size: 13px; line-height: 1.8; color: #1a202c;">
+            "Você já imaginou seu domingo assim? ☀️
+        </p>
+        <p style="margin: 10px 0 0 0; font-size: 13px; line-height: 1.8; color: #1a202c;">
+            Café da manhã no jardim enquanto as crianças brincam descalças na grama. Sem pressa, sem barulho de trânsito, só o som dos passarinhos e aquele solzinho gostoso.
+        </p>
+        <p style="margin: 10px 0 0 0; font-size: 13px; line-height: 1.8; color: #1a202c;">
+            Essa casa em [bairro] tem exatamente esse clima. 3 quartos, área gourmet e um jardim que é um convite para criar memórias em família.
+        </p>
+        <p style="margin: 10px 0 0 0; font-size: 13px; line-height: 1.8; color: #1a202c;">
+            🏡 O que você faria primeiro nesse jardim? Churrasco? Horta? Espaço pet?
+        </p>
+        <p style="margin: 10px 0 0 0; font-size: 13px; line-height: 1.8; color: #1a202c;">
+            Comenta aqui embaixo! 👇 E se conhece alguém procurando uma casa assim, marca nos comentários.
+        </p>
+        <p style="margin: 10px 0 0 0; font-size: 13px; line-height: 1.6; color: #2d3748;">
+            #CasaComJardim #ImoveisFamilia #VidaEmCasa #CasaDossonhos #Imoveis[SuaCidade]"
+        </p>
+    </div>
+    
+    <h3>💡 Dicas para legendas que viralizam</h3>
+    
+    <div style="background: white; border: 2px solid #daa520; border-radius: 10px; padding: 18px; margin: 15px 0;">
+        <div style="margin-bottom: 12px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">1. Primeira linha é tudo</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Use pergunta provocativa ou afirmação ousada</p>
+        </div>
+        <div style="margin-bottom: 12px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">2. Quebre em parágrafos curtos</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Blocos de texto assustam. Use 2-3 linhas por parágrafo</p>
+        </div>
+        <div style="margin-bottom: 12px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">3. Sempre inclua CTA</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">"Comenta aqui" "Salva esse post" "Marca um amigo"</p>
+        </div>
+        <div style="margin-bottom: 12px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">4. Conte histórias, não venda</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Pessoas se conectam com narrativas, não com características</p>
+        </div>
+        <div style="margin-bottom: 0;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">5. Teste o "você"</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Falar diretamente com o leitor aumenta engajamento em 50%</p>
+        </div>
+    </div>
+    
+    <div class="page-number">18</div>
+</div>
+<!-- PÁGINA 19: PROMPT 6 - STORIES COM CTA -->
+<div class="page" id="prompt6">
+    <h2>📌 Prompt 6: Stories com CTA forte</h2>
+    
+    <div class="highlight-box">
+        <p style="margin: 0;"><strong>Para que serve:</strong> Criar sequências de stories que convertem seguidores em leads qualificados.</p>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin: 20px 0;">
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">QUANDO USAR</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px; color: #084d6e; font-weight: 700;">Diariamente</p>
+        </div>
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">TEMPO</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px; color: #084d6e; font-weight: 700;">3 minutos</p>
+        </div>
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">IMPACTO</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px;"><span class="stars">⭐⭐⭐⭐</span> <span style="color: #daa520; font-weight: 700;">(conversão)</span></p>
+        </div>
+    </div>
+    
+    <h3>🎯 O prompt</h3>
+    
+    <div style="background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.7;">
+        <p style="margin: 0 0 12px 0; color: #1a202c;">Crie uma sequência de 3-5 stories para Instagram sobre:</p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">ASSUNTO:</p>
+        <p style="margin: 0 0 12px 0; color: #2d3748;">
+            [lançamento de imóvel/dica rápida/bastidor/resultado de cliente]
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">OBJETIVO:</p>
+        <p style="margin: 0 0 12px 0; color: #2d3748;">
+            [gerar mensagens no direct/agendar visitas/capturar leads/educar]
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">CTA DESEJADO:</p>
+        <p style="margin: 0 0 12px 0; color: #2d3748;">
+            ["me chama no direct"/"responde aqui"/"arrasta pra cima"/"clica no link"]
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">ESTRUTURA DE CADA STORY:</p>
+        <p style="margin: 0; color: #2d3748;">
+            Story 1: Gancho (desperta curiosidade)<br>
+            Story 2: Conteúdo (entrega valor ou informação)<br>
+            Story 3: Prova social (se aplicável)<br>
+            Story 4: CTA (chamada clara para ação)<br>
+            Story 5: Reforço/urgência (opcional)
+        </p>
+    </div>
+    
+    <div class="page-number">19</div>
+</div>
+<!-- PÁGINA 20: PROMPT 6 - CONTINUAÇÃO E EXEMPLO -->
+<div class="page">
+    <div style="background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 0 0 15px 0; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.7;">
+        <p style="margin: 0 0 8px 0; color: #084d6e; font-weight: 700;">DIRETRIZES:</p>
+        <p style="margin: 0; color: #2d3748;">
+            - Máximo 15 palavras por story<br>
+            - Use emojis para facilitar leitura visual<br>
+            - Crie senso de urgência genuíno<br>
+            - Inclua elementos interativos (enquete, caixinha de perguntas)<br>
+            - Tom: conversacional e direto
+        </p>
+    </div>
+    
+    <h3>✅ Exemplo de uso</h3>
+    
+    <div style="background: #fff8e6; border-left: 4px solid #daa520; padding: 15px; margin: 15px 0; border-radius: 6px;">
+        <p style="margin: 0 0 10px 0; font-size: 13px; color: #084d6e; font-weight: 700;">ENTRADA:</p>
+        <p style="margin: 0; font-size: 13px; line-height: 1.6; color: #2d3748;">
+            Assunto: Apartamento novo no bairro X<br>
+            Objetivo: Agendar visitas<br>
+            CTA: "Me chama no direct"
+        </p>
+    </div>
+    
+    <div style="background: #e6f7f0; border-left: 4px solid #084d6e; padding: 15px; margin: 15px 0; border-radius: 6px;">
+        <p style="margin: 0 0 10px 0; font-size: 13px; color: #084d6e; font-weight: 700;">SAÍDA DA IA:</p>
+        
+        <p style="margin: 0 0 12px 0; font-size: 13px; line-height: 1.7; color: #1a202c;">
+            <strong>STORY 1:</strong><br>
+            🚨 Acabou de sair do forno!<br>
+            Um apartamento que vocês vão PIRAR<br>
+            (arrasta pro lado)
+        </p>
+        
+        <p style="margin: 12px 0; font-size: 13px; line-height: 1.7; color: #1a202c;">
+            <strong>STORY 2:</strong><br>
+            📍 [Bairro] - 3 quartos<br>
+            🏊 Área gourmet na sacada<br>
+            💰 Financiamento facilitado<br>
+            ✨ Pronto pra morar
+        </p>
+        
+        <p style="margin: 12px 0; font-size: 13px; line-height: 1.7; color: #1a202c;">
+            <strong>STORY 3:</strong><br>
+            A localização? 🎯<br>
+            • 5 min do metrô<br>
+            • Mercado na esquina<br>
+            • Escola do lado<br>
+            Tudo pertinho!
+        </p>
+        
+        <p style="margin: 12px 0 0 0; font-size: 13px; line-height: 1.7; color: #1a202c;">
+            <strong>STORY 4:</strong><br>
+            ⚡ Visitas agendadas pra HOJE<br>
+            Me chama no direct agora<br>
+            que eu te mando todas as fotos!<br>
+            [Caixinha de perguntas: "Quero visitar!"]
+        </p>
+    </div>
+    
+    <div class="page-number">20</div>
+</div>
+<!-- PÁGINA 21: PROMPT 6 - STORY 5 E DICAS -->
+<div class="page">
+    <div style="background: #e6f7f0; border-left: 4px solid #084d6e; padding: 15px; margin: 0 0 20px 0; border-radius: 6px;">
+        <p style="margin: 0; font-size: 13px; line-height: 1.7; color: #1a202c;">
+            <strong>STORY 5:</strong><br>
+            Já recebi 8 mensagens! 📲<br>
+            Esse vai VOAR<br>
+            Não deixa pra depois!
+        </p>
+    </div>
+    
+    <h3>💡 Dicas para stories que convertem</h3>
+    
+    <div style="background: white; border: 2px solid #daa520; border-radius: 10px; padding: 18px; margin: 15px 0;">
+        <div style="margin-bottom: 12px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">1. Use a regra dos 3 segundos</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Se não prender em 3 segundos, a pessoa pula. Gancho visual + texto curto</p>
+        </div>
+        <div style="margin-bottom: 12px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">2. Sequência de 3-5 é ideal</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Menos que 3 = pouco conteúdo. Mais que 5 = pessoas desistem</p>
+        </div>
+        <div style="margin-bottom: 12px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">3. CTA em todo story</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">"Arrasta", "Responde", "Clica" - sempre diga o que fazer</p>
+        </div>
+        <div style="margin-bottom: 12px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">4. Use elementos interativos</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Enquetes e caixinhas aumentam engajamento em 80%</p>
+        </div>
+        <div style="margin-bottom: 0;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">5. Urgência real funciona</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">"Só hoje", "Últimas vagas" - mas seja honesto sempre</p>
+        </div>
+    </div>
+    
+    <div class="page-number">21</div>
+</div>
+<!-- PÁGINA 22: PROMPT 7 - POST DICA RÁPIDA -->
+<div class="page" id="prompt7">
+    <h2>📌 Prompt 7: Post dica rápida</h2>
+    
+    <div class="highlight-box">
+        <p style="margin: 0;"><strong>Para que serve:</strong> Criar posts curtos e valiosos que posicionam você como especialista.</p>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin: 20px 0;">
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">QUANDO USAR</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px; color: #084d6e; font-weight: 700;">2x por semana</p>
+        </div>
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">TEMPO</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px; color: #084d6e; font-weight: 700;">1 minuto</p>
+        </div>
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">IMPACTO</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px;"><span class="stars">⭐⭐⭐⭐</span> <span style="color: #daa520; font-weight: 700;">(autoridade)</span></p>
+        </div>
+    </div>
+    
+    <h3>🎯 O prompt</h3>
+    
+    <div style="background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.7;">
+        <p style="margin: 0 0 12px 0; color: #1a202c;">Crie uma dica rápida e prática sobre o mercado imobiliário:</p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">TEMA DA DICA:</p>
+        <p style="margin: 0 0 12px 0; color: #2d3748;">
+            [exemplo: "Como negociar melhor", "Documentos necessários", "Erros comuns", "Valorização de imóvel"]
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">PÚBLICO-ALVO:</p>
+        <p style="margin: 0 0 12px 0; color: #2d3748;">
+            [compradores/vendedores/investidores/inquilinos]
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">FORMATO:</p>
+        <p style="margin: 0 0 12px 0; color: #2d3748;">
+            1. Título chamativo com emoji<br>
+            2. Explicação clara em 2-3 parágrafos curtos<br>
+            3. Exemplo prático (se aplicável)<br>
+            4. Call-to-action simples<br>
+            5. 3 hashtags relevantes
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">DIRETRIZES:</p>
+        <p style="margin: 0; color: #2d3748;">
+            - Máximo 100 palavras (leitura rápida)<br>
+            - Tom: educativo mas acessível<br>
+            - Foco em ação imediata<br>
+            - Evite jargões técnicos<br>
+            - Seja específico, não genérico
+        </p>
+    </div>
+    
+    <div class="page-number">22</div>
+</div>
+<!-- PÁGINA 23: PROMPT 7 - EXEMPLO E TEMAS -->
+<div class="page">
+    <h3>✅ Exemplo de uso</h3>
+    
+    <div style="background: #fff8e6; border-left: 4px solid #daa520; padding: 15px; margin: 15px 0; border-radius: 6px;">
+        <p style="margin: 0 0 10px 0; font-size: 13px; color: #084d6e; font-weight: 700;">ENTRADA:</p>
+        <p style="margin: 0; font-size: 13px; line-height: 1.6; color: #2d3748;">
+            Tema: "Como saber se o preço está justo"<br>
+            Público: Compradores de primeira viagem
+        </p>
+    </div>
+    
+    <div style="background: #e6f7f0; border-left: 4px solid #084d6e; padding: 15px; margin: 15px 0; border-radius: 6px;">
+        <p style="margin: 0 0 10px 0; font-size: 13px; color: #084d6e; font-weight: 700;">SAÍDA DA IA:</p>
+        <p style="margin: 0; font-size: 13px; line-height: 1.8; color: #1a202c;">
+            <strong>💰 DICA: Como saber se o preço está justo?</strong>
+        </p>
+        <p style="margin: 10px 0 0 0; font-size: 13px; line-height: 1.8; color: #1a202c;">
+            Antes de fazer proposta, faça isso:
+        </p>
+        <p style="margin: 10px 0 0 0; font-size: 13px; line-height: 1.8; color: #1a202c;">
+            1️⃣ Pesquise 3-5 imóveis similares no mesmo bairro<br>
+            2️⃣ Compare: metragem, andar, idade do imóvel<br>
+            3️⃣ Calcule o preço por m² (valor total ÷ área)
+        </p>
+        <p style="margin: 10px 0 0 0; font-size: 13px; line-height: 1.8; color: #1a202c;">
+            <strong>Exemplo real:</strong> Apartamento de 80m² por R$ 400mil = R$ 5.000/m². Se similares estão em R$ 4.500/m², você tem margem pra negociar!
+        </p>
+        <p style="margin: 10px 0 0 0; font-size: 13px; line-height: 1.8; color: #1a202c;">
+            📲 Precisa de ajuda pra avaliar um imóvel? Me chama!
+        </p>
+        <p style="margin: 10px 0 0 0; font-size: 13px; line-height: 1.6; color: #2d3748;">
+            #DicasImobiliarias #ComprarImovel #MercadoImobiliario
+        </p>
+    </div>
+    
+    <h3>💡 Temas que funcionam para dicas rápidas</h3>
+    
+    <div style="background: white; border: 2px solid #daa520; border-radius: 8px; padding: 14px; margin: 12px 0;">
+        <div style="margin-bottom: 8px;">
+            <p style="margin: 0; font-size: 12px; color: #084d6e; font-weight: 700;">✅ Temas campeões:</p>
+            <p style="margin: 4px 0 0 0; font-size: 11px; color: #2d3748; line-height: 1.5;">
+                • "Como economizar no ITBI" • "3 coisas que encarecem o condomínio"<br>
+                • "Melhor época para comprar imóvel" • "Como aumentar valor do seu imóvel"<br>
+                • "Documentos para financiamento" • "Sinais de que você está pagando caro"
+            </p>
+        </div>
+        <div style="margin-bottom: 0;">
+            <p style="margin: 0; font-size: 12px; color: #084d6e; font-weight: 700;">🎯 Frequência ideal:</p>
+            <p style="margin: 4px 0 0 0; font-size: 11px; color: #2d3748; line-height: 1.5;">2x por semana - terça e quinta • 💎 <strong>Bônus:</strong> Transforme dicas em carrosséis depois</p>
+        </div>
+    </div>
+    
+    <div class="page-number">23</div>
+</div>
+<!-- PÁGINA 24: PROMPT 8 - TOUR VIRTUAL -->
+<div class="page" id="prompt8">
+    <h2>📌 Prompt 8: Roteiro de tour virtual</h2>
+    
+    <div class="highlight-box">
+        <p style="margin: 0;"><strong>Para que serve:</strong> Criar roteiros profissionais para vídeos de tour que vendem.</p>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin: 20px 0;">
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">QUANDO USAR</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px; color: #084d6e; font-weight: 700;">Semanal</p>
+        </div>
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">TEMPO</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px; color: #084d6e; font-weight: 700;">10 minutos</p>
+        </div>
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">IMPACTO</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px;"><span class="stars">⭐⭐⭐⭐⭐</span> <span style="color: #daa520; font-weight: 700;">(diferencial)</span></p>
+        </div>
+    </div>
+    
+    <h3>🎯 O prompt</h3>
+    
+    <div style="background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.7;">
+        <p style="margin: 0 0 12px 0; color: #1a202c;">Crie um roteiro completo para tour virtual em vídeo do seguinte imóvel:</p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">INFORMAÇÕES DO IMÓVEL:</p>
+        <p style="margin: 0 0 12px 0; color: #2d3748;">
+            Tipo: [apartamento/casa/comercial]<br>
+            Quartos: [número] | Banheiros: [número]<br>
+            Área: [metragem]<br>
+            Diferencial principal: [o que mais chama atenção]<br>
+            Público-alvo: [perfil do comprador ideal]<br>
+            Duração do vídeo: [1-3 minutos]
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">ESTRUTURA DO ROTEIRO:</p>
+        <p style="margin: 0 0 12px 0; color: #2d3748;">
+            1. Abertura impactante (5-10 segundos)<br>
+            2. Tour pelos ambientes (ordem lógica)<br>
+            3. Destaques e diferenciais<br>
+            4. Chamada final com CTA
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">PARA CADA AMBIENTE, INCLUA:</p>
+        <p style="margin: 0; color: #2d3748;">
+            - O que falar (texto sugerido)<br>
+            - O que mostrar (ângulos e detalhes)<br>
+            - Tempo aproximado no ambiente<br>
+            - Dica de filmagem
+        </p>
+    </div>
+    
+    <div class="page-number">24</div>
+</div>
+<!-- PÁGINA 25: PROMPT 8 - CONTINUAÇÃO E EXEMPLO -->
+<div class="page">
+    <div style="background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 0 0 15px 0; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.7;">
+        <p style="margin: 0 0 8px 0; color: #084d6e; font-weight: 700;">TOM DO ROTEIRO:</p>
+        <p style="margin: 0 0 12px 0; color: #2d3748;">
+            Natural, entusiasmado mas profissional. Como se estivesse mostrando para um amigo.
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">DIRETRIZES:</p>
+        <p style="margin: 0; color: #2d3748;">
+            - Comece pelo ambiente mais impactante<br>
+            - Mencione dimensões quando relevante<br>
+            - Destaque iluminação natural<br>
+            - Fale de funcionalidade, não só estética<br>
+            - Termine com vista externa ou melhor ambiente
+        </p>
+    </div>
+    
+    <h3>✅ Exemplo de uso</h3>
+    
+    <div style="background: #fff8e6; border-left: 4px solid #daa520; padding: 15px; margin: 15px 0; border-radius: 6px;">
+        <p style="margin: 0 0 10px 0; font-size: 13px; color: #084d6e; font-weight: 700;">ENTRADA:</p>
+        <p style="margin: 0; font-size: 13px; line-height: 1.6; color: #2d3748;">
+            Tipo: Apartamento | Quartos: 2 | Banheiros: 1<br>
+            Área: 65m² | Diferencial: Varanda com vista<br>
+            Público: Casal jovem | Duração: 2 minutos
+        </p>
+    </div>
+    
+    <div style="background: #e6f7f0; border-left: 4px solid #084d6e; padding: 15px; margin: 15px 0; border-radius: 6px;">
+        <p style="margin: 0 0 10px 0; font-size: 13px; color: #084d6e; font-weight: 700;">SAÍDA DA IA:</p>
+        
+        <p style="margin: 0 0 12px 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>ABERTURA (0:00-0:10)</strong><br>
+            <strong>O que falar:</strong> "Olha que vista! Hoje eu vou te mostrar um apê de 2 quartos que vai te surpreender. Vem comigo!"<br>
+            <strong>O que mostrar:</strong> Panorâmica da varanda com vista<br>
+            <strong>Dica:</strong> Comece com o diferencial mais forte
+        </p>
+        
+        <p style="margin: 12px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>SALA (0:10-0:35)</strong><br>
+            <strong>O que falar:</strong> "A sala tem 20m² e é toda integrada. Olha como a luz natural entra bem! Dá pra fazer um espaço gourmet aqui e ainda sobra espaço pro sofá."<br>
+            <strong>O que mostrar:</strong> Ângulo amplo da entrada, depois detalhe das janelas<br>
+            <strong>Tempo:</strong> 25 segundos<br>
+            <strong>Dica:</strong> Caminhe devagar, mostre profundidade
+        </p>
+    </div>
+    
+    <div class="page-number">25</div>
+</div>
+
+<!-- PÁGINA 26: PROMPT 8 - CONTINUAÇÃO DO ROTEIRO -->
+<div class="page">
+    <div style="background: #e6f7f0; border-left: 4px solid #084d6e; padding: 15px; margin: 0 0 15px 0; border-radius: 6px;">
+        <p style="margin: 0 0 12px 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>COZINHA (0:35-0:55)</strong><br>
+            <strong>O que falar:</strong> "Cozinha planejada, olha só! Fogão cooktop, forno elétrico, e ainda tem espaço pra geladeira side by side. Armários até o teto = máximo aproveitamento."<br>
+            <strong>O que mostrar:</strong> Bancada, armários abertos, área de circulação<br>
+            <strong>Tempo:</strong> 20 segundos<br>
+            <strong>Dica:</strong> Abra gavetas/portas para mostrar espaço interno
+        </p>
+        
+        <p style="margin: 12px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>QUARTOS (0:55-1:25)</strong><br>
+            <strong>O que falar:</strong> "Quarto 1: perfeito pro casal, cabe cama king e ainda tem espaço pro guarda-roupa. Quarto 2: ideal pra escritório ou visitas. Ambos com armários embutidos!"<br>
+            <strong>O que mostrar:</strong> Cada quarto de ponta a ponta, closets/armários<br>
+            <strong>Tempo:</strong> 15 segundos cada<br>
+            <strong>Dica:</strong> Mostre onde cabe a cama, facilita visualização
+        </p>
+        
+        <p style="margin: 12px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>BANHEIRO (1:25-1:40)</strong><br>
+            <strong>O que falar:</strong> "Banheiro com box blindex, bancada em granito e aquecimento a gás. Chuveiro quente na hora, sem espera!"<br>
+            <strong>O que mostrar:</strong> Visão geral, detalhes de acabamento<br>
+            <strong>Tempo:</strong> 15 segundos<br>
+            <strong>Dica:</strong> Destaque funcionalidades (aquecimento, ventilação)
+        </p>
+        
+        <p style="margin: 12px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>ÁREA DE SERVIÇO (1:40-1:50)</strong><br>
+            <strong>O que falar:</strong> "Área de serviço fechada, cabe máquina e tanque, com ventilação natural."<br>
+            <strong>O que mostrar:</strong> Espaço disponível<br>
+            <strong>Tempo:</strong> 10 segundos
+        </p>
+        
+        <p style="margin: 12px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>ENCERRAMENTO - VARANDA (1:50-2:00)</strong><br>
+            <strong>O que falar:</strong> "E pra fechar com chave de ouro: essa vista! Imagina tomar um café aqui todo dia? Gostou? Chama no direct pra agendar sua visita!"<br>
+            <strong>O que mostrar:</strong> Panorâmica final da vista<br>
+            <strong>Tempo:</strong> 10 segundos<br>
+            <strong>Dica:</strong> Termine sempre com CTA claro
+        </p>
+    </div>
+    
+    <div class="page-number">26</div>
+</div>
+
+<!-- PÁGINA 27: PROMPT 8 - DICAS EXPANDIDAS -->
+<div class="page">
+    <h3>💡 Dicas para tours que vendem</h3>
+    
+    <div style="background: linear-gradient(135deg, rgba(8, 77, 110, 0.05) 0%, rgba(218, 165, 32, 0.05) 100%); border: 2px solid #daa520; border-radius: 12px; padding: 20px; margin: 0 0 20px 0; box-shadow: 0 4px 15px rgba(218, 165, 32, 0.1);">
+        <div style="margin-bottom: 14px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">1. Grave em horários com luz natural</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">10h-15h é o melhor período. Luz natural valoriza 40% mais o imóvel. Evite dias nublados ou chuvosos.</p>
+        </div>
+        <div style="margin-bottom: 14px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">2. Estabilize a imagem sempre</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Use gimbal ou celular com estabilização óptica. Vídeo tremido transmite amadorismo e reduz credibilidade em 70%.</p>
+        </div>
+        <div style="margin-bottom: 14px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">3. Prepare o imóvel como vitrine</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Organize, limpe, abra todas as cortinas, ligue luzes, retire objetos pessoais. Flores frescas fazem diferença.</p>
+        </div>
+        <div style="margin-bottom: 14px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">4. Pratique o roteiro 3x antes</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Faça o percurso completo para memorizar. Naturalidade vende, robô afasta. Anote pontos-chave.</p>
+        </div>
+        <div style="margin-bottom: 14px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">5. Música de fundo estratégica</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Use trilha instrumental suave (volume baixo). Aumenta retenção em 60% e passa profissionalismo.</p>
+        </div>
+        <div style="margin-bottom: 14px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">6. Ângulos amplos valorizem espaço</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Filme dos cantos das salas para mostrar profundidade. Evite zoom digital. Movimente-se devagar.</p>
+        </div>
+        <div style="margin-bottom: 14px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">7. Legendas aumentam conversão</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">80% assistem sem som. Adicione legendas com informações-chave (metragem, preço, localização).</p>
+        </div>
+        <div style="margin-bottom: 14px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">8. Termine com CTA visual</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Tela final com WhatsApp, Instagram e "Agende sua visita". Call-to-action visual aumenta leads em 45%.</p>
+        </div>
+        <div style="margin-bottom: 0;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">9. Duração ideal: 1:30 a 2:30</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Menos que isso = superficial. Mais = perda de atenção. 2 minutos é o ponto ideal de conversão.</p>
+        </div>
+    </div>
+    
+    <div class="page-number">27</div>
+</div>
+<!-- PÁGINA 28: PROMPT 9 - REELS/TIKTOK -->
+<div class="page" id="prompt9">
+    <h2>📌 Prompt 9: Roteiro Reels/TikTok viral</h2>
+    
+    <div class="highlight-box">
+        <p style="margin: 0;"><strong>Para que serve:</strong> Criar vídeos curtos (15-60s) que viralizam e geram milhares de visualizações organicamente.</p>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin: 20px 0;">
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">QUANDO USAR</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px; color: #084d6e; font-weight: 700;">2-3x por semana</p>
+        </div>
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">TEMPO</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px; color: #084d6e; font-weight: 700;">5 minutos</p>
+        </div>
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">IMPACTO</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px;"><span class="stars">⭐⭐⭐⭐⭐</span> <span style="color: #daa520; font-weight: 700;">(viralização)</span></p>
+        </div>
+    </div>
+    
+    <h3>🎯 O prompt</h3>
+    
+    <div style="background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.7;">
+        <p style="margin: 0 0 12px 0; color: #1a202c;"><strong>Você é um especialista em conteúdo viral para Instagram Reels e TikTok.</strong></p>
+        <p style="margin: 0 0 12px 0; color: #1a202c;">Crie um roteiro detalhado para um vídeo de 15-60 segundos sobre:</p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">TEMA:</p>
+        <p style="margin: 0 0 12px 0; color: #2d3748;">
+            [Exemplos: "3 erros ao comprar imóvel", "Tour relâmpago", "Antes e depois", "Dica rápida de decoração", "Bastidor de venda", "Reação de cliente"]
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">OBJETIVO:</p>
+        <p style="margin: 0 0 12px 0; color: #2d3748;">
+            [Viralizar/Educar/Entreter/Gerar leads]
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">DURAÇÃO:</p>
+        <p style="margin: 0 0 12px 0; color: #2d3748;">
+            [15s/30s/45s/60s]
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">ESTRUTURA DO ROTEIRO:</p>
+        <p style="margin: 0; color: #2d3748;">
+            - Hook visual (0-3s): O que prende nos primeiros 3 segundos<br>
+            - Desenvolvimento (3s-50s): Conteúdo principal cena por cena<br>
+            - CTA final (50s-60s): Chamada para ação clara<br>
+            - Texto na tela: Legendas/palavras-chave para cada cena<br>
+            - Áudio sugerido: Música/som trending ou voz
+        </p>
+    </div>
+    
+    <div class="page-number">28</div>
+</div>
+
+<!-- PÁGINA 29: PROMPT 9 - CONTINUAÇÃO E EXEMPLO -->
+<div class="page">
+    <div style="background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 0 0 15px 0; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.7;">
+        <p style="margin: 0 0 8px 0; color: #084d6e; font-weight: 700;">DIRETRIZES PARA VIRALIZAÇÃO:</p>
+        <p style="margin: 0; color: #2d3748;">
+            - Hook nos primeiros 1,5 segundos (ou perdem 70% da audiência)<br>
+            - Movimento constante (câmera parada = scroll)<br>
+            - Texto na tela sempre (85% assistem sem som)<br>
+            - Cortes rápidos a cada 2-4 segundos<br>
+            - Trending audio aumenta alcance em 300%<br>
+            - Finalizar com pergunta ou CTA interativo
+        </p>
+    </div>
+    
+    <h3>✅ Exemplo de uso</h3>
+    
+    <div style="background: #fff8e6; border-left: 4px solid #daa520; padding: 15px; margin: 15px 0; border-radius: 6px;">
+        <p style="margin: 0 0 10px 0; font-size: 13px; color: #084d6e; font-weight: 700;">ENTRADA:</p>
+        <p style="margin: 0; font-size: 13px; line-height: 1.6; color: #2d3748;">
+            Tema: "3 coisas que fazem imóvel desvalorizar"<br>
+            Objetivo: Educar e viralizar<br>
+            Duração: 30 segundos
+        </p>
+    </div>
+    
+    <div style="background: #e6f7f0; border-left: 4px solid #084d6e; padding: 15px; margin: 15px 0; border-radius: 6px;">
+        <p style="margin: 0 0 10px 0; font-size: 13px; color: #084d6e; font-weight: 700;">SAÍDA DA IA:</p>
+        
+        <p style="margin: 0 0 12px 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>CENA 1 (0-3s) - HOOK</strong><br>
+            <strong>Visual:</strong> Close no rosto, expressão preocupada, movimento rápido de câmera<br>
+            <strong>Fala:</strong> "Se você tem essas 3 coisas na sua casa, ela tá PERDENDO valor agora!"<br>
+            <strong>Texto na tela:</strong> "🚨 3 ERROS GRAVES"<br>
+            <strong>Áudio:</strong> Trending sound com suspense
+        </p>
+        
+        <p style="margin: 12px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>CENA 2 (3-12s) - ERRO #1</strong><br>
+            <strong>Visual:</strong> Transição rápida para ambiente com mofo/infiltração<br>
+            <strong>Fala:</strong> "Número 1: Infiltração não tratada. Perde até 30% do valor!"<br>
+            <strong>Texto na tela:</strong> "❌ INFILTRAÇÃO = -30%"<br>
+            <strong>Efeito:</strong> Zoom no problema, seta apontando
+        </p>
+        
+        <p style="margin: 12px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>CENA 3 (12-21s) - ERRO #2</strong><br>
+            <strong>Visual:</strong> Pintura descascada, paredes sujas<br>
+            <strong>Fala:</strong> "Número 2: Falta de manutenção visual. Casa abandonada espanta comprador!"<br>
+            <strong>Texto na tela:</strong> "❌ MAL CUIDADO = FUGA"<br>
+            <strong>Efeito:</strong> Antes e depois rápido
+        </p>
+    </div>
+    
+    <div class="page-number">29</div>
+</div>
+
+<!-- PÁGINA 30: PROMPT 9 - CONTINUAÇÃO DO EXEMPLO E DICAS -->
+<div class="page">
+    <div style="background: #e6f7f0; border-left: 4px solid #084d6e; padding: 15px; margin: 0 0 20px 0; border-radius: 6px;">
+        <p style="margin: 0 0 12px 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>CENA 4 (21-28s) - ERRO #3</strong><br>
+            <strong>Visual:</strong> Bagunça, objetos pessoais espalhados<br>
+            <strong>Fala:</strong> "Número 3: Ambientes lotados. Comprador precisa ver ESPAÇO, não suas coisas!"<br>
+            <strong>Texto na tela:</strong> "❌ BAGUNÇA = MENOS VALOR"<br>
+            <strong>Efeito:</strong> Câmera girando pelo ambiente caótico
+        </p>
+        
+        <p style="margin: 12px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>CENA 5 (28-30s) - CTA</strong><br>
+            <strong>Visual:</strong> Volta pro close, sorriso, apontando<br>
+            <strong>Fala:</strong> "Salva esse vídeo! E comenta: qual desses você tem em casa?"<br>
+            <strong>Texto na tela:</strong> "💾 SALVA + 💬 COMENTA"<br>
+            <strong>Efeito:</strong> Ícones animados de salvar e comentar
+        </p>
+        
+        <p style="margin: 12px 0 0 0; font-size: 12px; line-height: 1.7; color: #2d3748;">
+            <strong>HASHTAGS:</strong> #ImoveisNoBrasil #DicasImoveis #MercadoImobiliario #CorretoraDeImoveis #ReelsImobiliario
+        </p>
+    </div>
+    
+    <h3>💡 Fórmulas de Reels que viralizam</h3>
+    
+    <div style="background: linear-gradient(135deg, rgba(8, 77, 110, 0.05) 0%, rgba(218, 165, 32, 0.05) 100%); border: 2px solid #daa520; border-radius: 12px; padding: 20px; margin: 0 0 20px 0; box-shadow: 0 4px 15px rgba(218, 165, 32, 0.1);">
+        <div style="margin-bottom: 14px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">1. Lista numérica (3, 5, 7 itens)</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">"5 erros...", "3 sinais que...", "7 formas de..." - Formato mais viral do Instagram</p>
+        </div>
+        <div style="margin-bottom: 14px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">2. Antes e Depois</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Transformação gera curiosidade. Funciona com reforma, organização, decoração</p>
+        </div>
+        <div style="margin-bottom: 14px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">3. POV (Point of View)</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">"POV: você acabou de vender seu primeiro imóvel" - Gera identificação emocional</p>
+        </div>
+        <div style="margin-bottom: 14px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">4. "Ninguém te conta mas..."</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Segredos e revelações. "Ninguém te conta mas imóvel X vale mais que Y"</p>
+        </div>
+        <div style="margin-bottom: 0;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">5. Tour ultra rápido</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">15s mostrando imóvel inteiro em cortes dinâmicos. Gera curiosidade e mensagens</p>
+        </div>
+    </div>
+    
+    <div class="page-number">30</div>
+</div>
+
+<!-- PÁGINA 31: PROMPT 10 - TESTEMUNHO CLIENTE -->
+<div class="page" id="prompt10">
+    <h2>📌 Prompt 10: Roteiro testemunho de cliente</h2>
+    
+    <div class="highlight-box">
+        <p style="margin: 0;"><strong>Para que serve:</strong> Criar vídeos de depoimento que constroem confiança e prova social irrefutável.</p>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin: 20px 0;">
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">QUANDO USAR</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px; color: #084d6e; font-weight: 700;">A cada venda fechada</p>
+        </div>
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">TEMPO</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px; color: #084d6e; font-weight: 700;">15 minutos</p>
+        </div>
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">IMPACTO</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px;"><span class="stars">⭐⭐⭐⭐⭐</span> <span style="color: #daa520; font-weight: 700;">(credibilidade)</span></p>
+        </div>
+    </div>
+    
+    <h3>🎯 O prompt</h3>
+    
+    <div style="background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.7;">
+        <p style="margin: 0 0 12px 0; color: #1a202c;"><strong>Você é um diretor de conteúdo especializado em vídeos de depoimento autênticos.</strong></p>
+        <p style="margin: 0 0 12px 0; color: #1a202c;">Crie um roteiro de perguntas estratégicas para capturar um testemunho poderoso de cliente:</p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">CONTEXTO DA VENDA:</p>
+        <p style="margin: 0 0 12px 0; color: #2d3748;">
+            Tipo de imóvel: [casa/apartamento/terreno/comercial]<br>
+            Perfil do cliente: [primeira compra/investidor/família/upgrade]<br>
+            Desafio superado: [qual foi a dificuldade principal]<br>
+            Resultado alcançado: [o que o cliente conquistou]
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">OBJETIVO DO DEPOIMENTO:</p>
+        <p style="margin: 0 0 12px 0; color: #2d3748;">
+            [Construir confiança/Mostrar processo/Inspirar outros/Humanizar marca]
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">CRIE UM ROTEIRO COM:</p>
+        <p style="margin: 0; color: #2d3748;">
+            1. Perguntas de aquecimento (deixar o cliente confortável)<br>
+            2. Perguntas emocionais (capturar sentimento genuíno)<br>
+            3. Perguntas sobre o processo (mostrar seu trabalho)<br>
+            4. Pergunta sobre resultado (celebrar conquista)<br>
+            5. Dicas de condução (como fazer o cliente brilhar)
+        </p>
+    </div>
+    
+    <div class="page-number">31</div>
+</div>
+<!-- PÁGINA 32: PROMPT 10 - CONTINUAÇÃO E EXEMPLO -->
+<div class="page">
+    <div style="background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 0 0 15px 0; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.7;">
+        <p style="margin: 0 0 8px 0; color: #084d6e; font-weight: 700;">DIRETRIZES:</p>
+        <p style="margin: 0; color: #2d3748;">
+            - Duração ideal: 60-90 segundos (editado)<br>
+            - Ambiente: Natural (frente ao imóvel ou dentro dele)<br>
+            - Tom: Conversacional, não robotizado<br>
+            - Foco: História e emoção, não só elogios<br>
+            - Iluminação: Natural, sem filtros excessivos<br>
+            - Autenticidade vale mais que perfeição técnica
+        </p>
+    </div>
+    
+    <h3>✅ Exemplo de uso</h3>
+    
+    <div style="background: #fff8e6; border-left: 4px solid #daa520; padding: 15px; margin: 15px 0; border-radius: 6px;">
+        <p style="margin: 0 0 10px 0; font-size: 13px; color: #084d6e; font-weight: 700;">ENTRADA:</p>
+        <p style="margin: 0; font-size: 13px; line-height: 1.6; color: #2d3748;">
+            Tipo: Apartamento | Perfil: Primeira compra - casal jovem<br>
+            Desafio: Medo de financiamento e burocracia<br>
+            Resultado: Chaves na mão em 45 dias
+        </p>
+    </div>
+    
+    <div style="background: #e6f7f0; border-left: 4px solid #084d6e; padding: 15px; margin: 15px 0; border-radius: 6px;">
+        <p style="margin: 0 0 10px 0; font-size: 13px; color: #084d6e; font-weight: 700;">SAÍDA DA IA - ROTEIRO DE PERGUNTAS:</p>
+        
+        <p style="margin: 0 0 12px 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>AQUECIMENTO (30 segundos iniciais)</strong><br>
+            1. "Me conta: como foi quando vocês decidiram que era hora de comprar o primeiro imóvel?"<br>
+            <em>→ Deixa o cliente relaxar, começar falando de si mesmo</em>
+        </p>
+        
+        <p style="margin: 12px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            2. "O que vocês estavam buscando? Tinha alguma coisa específica que não podia faltar?"<br>
+            <em>→ Conecta com outros compradores na mesma situação</em>
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; font-size: 12px; color: #084d6e; font-weight: 700; margin-top: 12px;">EMOÇÃO (capturar o sentimento)</p>
+        <p style="margin: 0 0 12px 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            3. "Qual era o maior medo de vocês antes de começar o processo?"<br>
+            <em>→ OURO! Todo comprador tem medo. Isso gera identificação imediata</em>
+        </p>
+        
+        <p style="margin: 12px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            4. "Teve algum momento que vocês pensaram 'nossa, vai dar certo mesmo'?"<br>
+            <em>→ Captura o momento de transformação</em>
+        </p>
+    </div>
+    
+    <div class="page-number">32</div>
+</div>
+
+<!-- PÁGINA 33: PROMPT 10 - CONTINUAÇÃO DO ROTEIRO -->
+<div class="page">
+    <div style="background: #e6f7f0; border-left: 4px solid #084d6e; padding: 15px; margin: 0 0 15px 0; border-radius: 6px;">
+        <p style="margin: 0 0 8px 0; font-size: 12px; color: #084d6e; font-weight: 700;">PROCESSO (mostrar seu trabalho)</p>
+        <p style="margin: 0 0 12px 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            5. "Como foi trabalhar comigo? O que mais te surpreendeu no processo?"<br>
+            <em>→ Deixa o cliente contar naturalmente como você ajudou</em>
+        </p>
+        
+        <p style="margin: 12px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            6. "Teve alguma coisa que eu fiz que facilitou muito a vida de vocês?"<br>
+            <em>→ Captura diferenciais específicos do seu atendimento</em>
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; font-size: 12px; color: #084d6e; font-weight: 700; margin-top: 12px;">RESULTADO (celebração)</p>
+        <p style="margin: 0 0 12px 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            7. "Como foi o dia que vocês receberam as chaves? Me conta esse momento!"<br>
+            <em>→ Emoção genuína, o momento mais poderoso do vídeo</em>
+        </p>
+        
+        <p style="margin: 12px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            8. "O que mudou na vida de vocês depois que conseguiram o apartamento?"<br>
+            <em>→ Mostra impacto real, não só transação comercial</em>
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; font-size: 12px; color: #084d6e; font-weight: 700; margin-top: 12px;">FECHAMENTO (recomendação)</p>
+        <p style="margin: 0 0 12px 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            9. "Se tivesse um amigo pensando em comprar imóvel, o que vocês diriam pra ele?"<br>
+            <em>→ Gera recomendação espontânea e autêntica</em>
+        </p>
+        
+        <p style="margin: 12px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            10. "Uma última: por que vocês me escolheram como corretora?"<br>
+            <em>→ Fecha com seus diferenciais pela boca do cliente</em>
+        </p>
+    </div>
+    
+    <h3>💡 Dicas de condução</h3>
+    
+    <div style="background: linear-gradient(135deg, rgba(8, 77, 110, 0.05) 0%, rgba(218, 165, 32, 0.05) 100%); border: 2px solid #daa520; border-radius: 12px; padding: 20px; margin: 0 0 20px 0; box-shadow: 0 4px 15px rgba(218, 165, 32, 0.1);">
+        <div style="margin-bottom: 12px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">✅ FAÇA:</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Grave logo após a entrega de chaves (emoção fresca) • Deixe cliente à vontade, não apresse • Faça perguntas abertas • Sorria e acene com a cabeça (incentiva)</p>
+        </div>
+        <div style="margin-bottom: 0;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">❌ EVITE:</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Roteiro decorado • Edição com cortes bruscos • Trilha muito alta • Aparecer mais que o cliente • Forçar elogios</p>
+        </div>
+    </div>
+    
+    <div class="page-number">33</div>
+</div>
+
+<!-- PÁGINA 34: PROMPT 11 - FOLLOW-UP PÓS-VISITA -->
+<div class="page" id="prompt11">
+    <h2>📌 Prompt 11: E-mail follow-up pós-visita</h2>
+    
+    <div class="highlight-box">
+        <p style="margin: 0;"><strong>Para que serve:</strong> Reativar interesse após visita e guiar o cliente para o próximo passo sem ser invasivo.</p>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin: 20px 0;">
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">QUANDO USAR</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px; color: #084d6e; font-weight: 700;">Sempre após visitas</p>
+        </div>
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">TEMPO</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px; color: #084d6e; font-weight: 700;">3 minutos</p>
+        </div>
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">IMPACTO</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px;"><span class="stars">⭐⭐⭐⭐⭐</span> <span style="color: #daa520; font-weight: 700;">(conversão)</span></p>
+        </div>
+    </div>
+    
+    <h3>🎯 O prompt</h3>
+    
+    <div style="background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.7;">
+        <p style="margin: 0 0 12px 0; color: #1a202c;"><strong>Você é um especialista em comunicação pós-venda e recuperação de leads.</strong></p>
+        <p style="margin: 0 0 12px 0; color: #1a202c;">Crie um e-mail de follow-up estratégico após visita ao imóvel:</p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">CONTEXTO DA VISITA:</p>
+        <p style="margin: 0 0 12px 0; color: #2d3748;">
+            Nome do cliente: [nome]<br>
+            Imóvel visitado: [tipo e localização]<br>
+            Reação durante visita: [positiva/neutra/com objeções]<br>
+            Objeções mencionadas: [preço/tamanho/localização/outro]<br>
+            Tempo desde a visita: [24h/48h/1 semana]
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">OBJETIVO DO E-MAIL:</p>
+        <p style="margin: 0 0 12px 0; color: #2d3748;">
+            [Agendar segunda visita/Responder objeções/Enviar proposta/Oferecer alternativas]
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">ESTRUTURA:</p>
+        <p style="margin: 0; color: #2d3748;">
+            1. Assunto irresistível (taxa de abertura 60%+)<br>
+            2. Abertura personalizada (mencionar momento específico)<br>
+            3. Valor adicional (info nova ou solução para objeção)<br>
+            4. Call-to-action claro e fácil<br>
+            5. PS estratégico (mais lido que o corpo do e-mail)
+        </p>
+    </div>
+    
+    <div class="page-number">34</div>
+</div>
+
+<!-- PÁGINA 35: PROMPT 11 - CONTINUAÇÃO E EXEMPLO -->
+<div class="page">
+    <div style="background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 0 0 15px 0; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.7;">
+        <p style="margin: 0 0 8px 0; color: #084d6e; font-weight: 700;">DIRETRIZES:</p>
+        <p style="margin: 0; color: #2d3748;">
+            - Tom: Amigável mas profissional, como continuação de conversa<br>
+            - Timing: Enviar 24h após visita (nem antes, nem depois)<br>
+            - Personalização: Mencionar pelo menos 1 detalhe da visita<br>
+            - Extensão: Máximo 150 palavras<br>
+            - Evite: Pressão excessiva, múltiplos CTAs, linguagem corporativa
+        </p>
+    </div>
+    
+    <h3>✅ Exemplo de uso</h3>
+    
+    <div style="background: #fff8e6; border-left: 4px solid #daa520; padding: 15px; margin: 15px 0; border-radius: 6px;">
+        <p style="margin: 0 0 10px 0; font-size: 13px; color: #084d6e; font-weight: 700;">ENTRADA:</p>
+        <p style="margin: 0; font-size: 13px; line-height: 1.6; color: #2d3748;">
+            Nome: Maria e João | Imóvel: Apartamento 2 quartos Centro<br>
+            Reação: Positiva mas preocupados com preço<br>
+            Objeção: "Vamos pensar e comparar com outros"<br>
+            Tempo: 24 horas após visita
+        </p>
+    </div>
+    
+    <div style="background: #e6f7f0; border-left: 4px solid #084d6e; padding: 15px; margin: 15px 0; border-radius: 6px;">
+        <p style="margin: 0 0 10px 0; font-size: 13px; color: #084d6e; font-weight: 700;">SAÍDA DA IA:</p>
+        
+        <p style="margin: 0 0 12px 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>ASSUNTO:</strong> Maria, lembrei de vocês quando vi isso! 💡
+        </p>
+        
+        <p style="margin: 12px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            Oi Maria e João!
+        </p>
+        
+        <p style="margin: 10px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            Espero que vocês estejam bem! Fiquei pensando na nossa conversa ontem, quando vocês comentaram sobre o espaço da sala ser perfeito para a família crescer. ❤️
+        </p>
+        
+        <p style="margin: 10px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            Montei uma simulação de financiamento personalizada que pode ajudar na decisão de vocês. Com a taxa atual do banco Itaú, a parcela fica R$ 380 menor do que a estimativa que conversamos.
+        </p>
+        
+        <p style="margin: 10px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            Também achei 2 imóveis similares na região pra vocês compararem (anexei fotos e valores). Sempre bom ter o contexto completo, né?
+        </p>
+        
+        <p style="margin: 10px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            Se quiserem conversar sobre isso ou revisar algum detalhe do apartamento, estou à disposição! Posso até marcar uma segunda visita em horário diferente, se preferirem.
+        </p>
+        
+        <p style="margin: 10px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            Respondam quando puderem, sem pressa. 😊
+        </p>
+        
+        <p style="margin: 10px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            Abraço,<br>
+            [Seu nome]<br>
+            [WhatsApp]
+        </p>
+        
+        <p style="margin: 10px 0 0 0; font-size: 12px; line-height: 1.7; color: #2d3748; font-style: italic;">
+            <strong>PS:</strong> Teve mais 3 visitas agendadas pro apartamento essa semana. Só pra vocês ficarem por dentro! 😉
+        </p>
+    </div>
+    
+    <div class="page-number">35</div>
+</div>
+<!-- PÁGINA 36: PROMPT 11 - VARIAÇÕES E DICAS -->
+<div class="page">
+    <h3>💡 Variações de follow-up por situação</h3>
+    
+    <div style="background: linear-gradient(135deg, rgba(8, 77, 110, 0.05) 0%, rgba(218, 165, 32, 0.05) 100%); border: 2px solid #daa520; border-radius: 12px; padding: 20px; margin: 0 0 20px 0; box-shadow: 0 4px 15px rgba(218, 165, 32, 0.1);">
+        <div style="margin-bottom: 14px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">Cliente adorou mas não respondeu (48h)</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Assunto: "Esqueci de te mostrar uma coisa importante" • Conteúdo: Detalhe que não viu ou benefício não mencionado</p>
+        </div>
+        <div style="margin-bottom: 14px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">Cliente com objeção de preço</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Assunto: "Simulação que pode mudar tudo" • Conteúdo: Opções de financiamento, comparativo de mercado, ROI</p>
+        </div>
+        <div style="margin-bottom: 14px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">Cliente indeciso entre 2+ imóveis</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Assunto: "Comparativo que pedi pra você" • Conteúdo: Tabela lado a lado, prós/contras honestos</p>
+        </div>
+        <div style="margin-bottom: 14px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">Cliente que visitou mas não achou ideal</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Assunto: "Acho que encontrei o que você procura" • Conteúdo: Alternativa mais adequada ao perfil</p>
+        </div>
+        <div style="margin-bottom: 0;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">Cliente precisando "pensar"</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Assunto: "Materiais para ajudar na decisão" • Conteúdo: Checklist, guia de bairro, calculadora</p>
+        </div>
+    </div>
+    
+    <h3>🎯 Assuntos que aumentam taxa de abertura</h3>
+    
+    <div style="background: white; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 15px 0;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div>
+                <p style="margin: 0; font-size: 13px; color: #084d6e; font-weight: 700;">✅ Funcionam:</p>
+                <p style="margin: 5px 0 0 0; font-size: 12px; color: #2d3748; line-height: 1.6;">
+                    • "Re: sua visita de ontem"<br>
+                    • "[Nome], esqueci de te falar isso"<br>
+                    • "Novidade sobre o apartamento"<br>
+                    • "Achei a resposta pra sua dúvida"<br>
+                    • Personalizar = +40% abertura
+                </p>
+            </div>
+            <div>
+                <p style="margin: 0; font-size: 13px; color: #084d6e; font-weight: 700;">❌ Evite:</p>
+                <p style="margin: 5px 0 0 0; font-size: 12px; color: #2d3748; line-height: 1.6;">
+                    • "Follow-up" / "Retorno"<br>
+                    • "Você ainda tem interesse?"<br>
+                    • Caps lock e !!! excessivos<br>
+                    • "Não perca essa oportunidade"<br>
+                    • Genéricos = caixa de spam
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="page-number">36</div>
+</div>
+
+<!-- PÁGINA 37: PROMPT 12 - REATIVAÇÃO LEAD FRIO -->
+<div class="page" id="prompt12">
+    <h2>📌 Prompt 12: E-mail reativação de lead frio</h2>
+    
+    <div class="highlight-box">
+        <p style="margin: 0;"><strong>Para que serve:</strong> Recuperar contatos antigos que esfriaram, sem parecer desesperado ou insistente.</p>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin: 20px 0;">
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">QUANDO USAR</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px; color: #084d6e; font-weight: 700;">Mensalmente</p>
+        </div>
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">TEMPO</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px; color: #084d6e; font-weight: 700;">3 minutos</p>
+        </div>
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">IMPACTO</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px;"><span class="stars">⭐⭐⭐⭐</span> <span style="color: #daa520; font-weight: 700;">(recuperação)</span></p>
+        </div>
+    </div>
+    
+    <h3>🎯 O prompt</h3>
+    
+    <div style="background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.7;">
+        <p style="margin: 0 0 12px 0; color: #1a202c;"><strong>Você é um especialista em reengajamento e recuperação de leads dormentes.</strong></p>
+        <p style="margin: 0 0 12px 0; color: #1a202c;">Crie um e-mail de reativação para contato que esfriou:</p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">CONTEXTO DO LEAD:</p>
+        <p style="margin: 0 0 12px 0; color: #2d3748;">
+            Nome: [nome do contato]<br>
+            Último contato: [há quanto tempo: 1 mês/3 meses/6 meses]<br>
+            Histórico: [o que buscava/por que parou]<br>
+            Perfil: [comprador/vendedor/investidor]
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">GATILHO DE REATIVAÇÃO:</p>
+        <p style="margin: 0 0 12px 0; color: #2d3748;">
+            [Novo imóvel perfeito/Mudança de mercado/Oportunidade limitada/Novo serviço/Check-in genuíno]
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">ESTRUTURA:</p>
+        <p style="margin: 0; color: #2d3748;">
+            1. Assunto que reconecta (não ignore o tempo passado)<br>
+            2. Abertura honesta e leve<br>
+            3. Motivo legítimo do contato (valor real)<br>
+            4. Saída fácil (sem pressão)<br>
+            5. CTA simples e de baixo comprometimento
+        </p>
+    </div>
+    
+    <div class="page-number">37</div>
+</div>
+
+<!-- PÁGINA 38: PROMPT 12 - EXEMPLO -->
+<div class="page">
+    <div style="background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 0 0 15px 0; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.7;">
+        <p style="margin: 0 0 8px 0; color: #084d6e; font-weight: 700;">DIRETRIZES:</p>
+        <p style="margin: 0; color: #2d3748;">
+            - Tom: Amigável, sem culpa ou pressão<br>
+            - Reconhecer o tempo: "Faz tempo!" é melhor que ignorar<br>
+            - Dar valor primeiro: Informação útil antes de pedir algo<br>
+            - Facilitar o "não": "Se não faz sentido, tudo bem!"<br>
+            - Curto: Máximo 120 palavras
+        </p>
+    </div>
+    
+    <h3>✅ Exemplo de uso</h3>
+    
+    <div class="example-box">
+        <p style="margin: 0 0 10px 0; font-size: 13px; color: #084d6e; font-weight: 700;">ENTRADA:</p>
+        <p style="margin: 0; font-size: 13px; line-height: 1.6; color: #2d3748;">
+            Nome: Carlos | Último contato: 3 meses atrás<br>
+            Histórico: Buscava apartamento 2Q, parou por incerteza financeira<br>
+            Perfil: Comprador | Gatilho: Taxas de financiamento caíram
+        </p>
+    </div>
+    
+    <div class="output-box">
+        <p style="margin: 0 0 10px 0; font-size: 13px; color: #084d6e; font-weight: 700;">SAÍDA DA IA:</p>
+        
+        <p style="margin: 0 0 12px 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>ASSUNTO:</strong> Carlos, notícia boa sobre financiamento 💰
+        </p>
+        
+        <p style="margin: 12px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            Oi Carlos!
+        </p>
+        
+        <p style="margin: 10px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            Faz um tempo que não conversamos (desde julho, né?). Tudo bem por aí?
+        </p>
+        
+        <p style="margin: 10px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            Lembrei de você porque as taxas de financiamento baixaram bastante esse mês - chegaram a 9,8% ao ano. Na época que conversamos, estavam em 11,5%. Isso muda MUITO o valor da parcela.
+        </p>
+        
+        <p style="margin: 10px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            Se ainda estiver considerando comprar aquele apê de 2 quartos, talvez seja um bom momento pra revisitar os números. Sem pressão nenhuma - só achei que você gostaria de saber! 😊
+        </p>
+        
+        <p style="margin: 10px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            Se quiser conversar sobre isso (ou sobre qualquer outra coisa do mercado), é só dar um alô.
+        </p>
+        
+        <p style="margin: 10px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            Abraço,<br>
+            [Seu nome]
+        </p>
+        
+        <p style="margin: 10px 0 0 0; font-size: 12px; line-height: 1.7; color: #2d3748; font-style: italic;">
+            <strong>PS:</strong> Se o timing não tá bom agora, sem problema algum. Só não queria que você perdesse essa info! 👍
+        </p>
+    </div>
+    
+    <div class="page-number">38</div>
+</div>
+
+<!-- PÁGINA 39: PROMPT 12 - DICAS DE REATIVAÇÃO -->
+<div class="page">
+    <h3>💡 Gatilhos de reativação que funcionam</h3>
+    
+    <div class="tips-box">
+        <div class="tip-item">
+            <p class="tip-title">1. Mudança no mercado</p>
+            <p class="tip-text">"Taxas caíram", "Preços ajustaram", "Novos programas de financiamento"</p>
+        </div>
+        <div class="tip-item">
+            <p class="tip-title">2. Imóvel perfeito surgiu</p>
+            <p class="tip-text">"Apareceu algo exatamente do jeito que você queria"</p>
+        </div>
+        <div class="tip-item">
+            <p class="tip-title">3. Check-in genuíno</p>
+            <p class="tip-text">"Como estão os planos?", "Ainda está considerando?"</p>
+        </div>
+        <div class="tip-item">
+            <p class="tip-title">4. Novo conteúdo valioso</p>
+            <p class="tip-text">"Criei um guia que pode te ajudar", "Fiz uma análise do seu bairro"</p>
+        </div>
+        <div class="tip-item">
+            <p class="tip-title">5. Referência pessoal</p>
+            <p class="tip-text">"Um cliente seu conhecido acabou de comprar", "Lembrei de você porque..."</p>
+        </div>
+    </div>
+    
+    <h3>⏰ Timing de reativação</h3>
+    
+    <div style="background: white; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 15px 0;">
+        <div style="margin-bottom: 12px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">1 mês sem contato:</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Ainda está quente. Use tom casual: "E aí, como estão os planos?"</p>
+        </div>
+        <div style="margin-bottom: 12px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">3 meses sem contato:</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Precisa de gatilho real. Ofereça valor específico ou nova oportunidade</p>
+        </div>
+        <div style="margin-bottom: 12px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">6 meses sem contato:</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Reconheça o tempo. Seja honesto: "Faz tempo que não falamos..."</p>
+        </div>
+        <div style="margin-bottom: 0;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">+1 ano sem contato:</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Última tentativa. Tom: "Atualizando minha base, ainda faz sentido manter contato?"</p>
+        </div>
+    </div>
+    
+    <div class="page-number">39</div>
+</div>
+
+<!-- PÁGINA 40 - PROMPT 13 -->
+<div class="page" id="prompt13">
+    <h2>📌 Prompt #13: E-mail última chamada</h2>
+    
+    <div class="highlight-box">
+        <p style="margin: 0;"><strong>Para que serve:</strong> Criar urgência genuína para fechar negociações que estão paradas sem ser agressivo.</p>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin: 20px 0;">
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">QUANDO USAR</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px; color: #084d6e; font-weight: 700;">Negociação emperrada</p>
+        </div>
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">TEMPO</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px; color: #084d6e; font-weight: 700;">2 minutos</p>
+        </div>
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">IMPACTO</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px;"><span class="stars">⭐⭐⭐⭐⭐</span> <span style="color: #daa520; font-weight: 700;">(fechamento)</span></p>
+        </div>
+    </div>
+    
+    <h3>🎯 O prompt</h3>
+    
+    <div style="background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.7;">
+        <p style="margin: 0 0 12px 0; color: #1a202c;"><strong>Você é um especialista em comunicação de fechamento e criação de urgência genuína.</strong></p>
+        <p style="margin: 0 0 12px 0; color: #1a202c;">Crie um e-mail de última chamada para cliente que está indeciso:</p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">SITUAÇÃO ATUAL:</p>
+        <p style="margin: 0 0 12px 0; color: #2d3748; font-size: 12px;">
+            Nome: [nome]<br>
+            Imóvel em questão: [tipo e localização]<br>
+            Estágio: [viu/visitou/recebeu proposta/negociando]<br>
+            Motivo da indecisão: [o que está travando]<br>
+            Prazo real: [se existe deadline real]
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">URGÊNCIA REAL:</p>
+        <p style="margin: 0 0 12px 0; color: #2d3748;">
+            [Outro interessado/Proprietário vai retirar do mercado/Condições especiais acabando/Oportunidade limitada REAL]
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">ESTRUTURA:</p>
+        <p style="margin: 0; color: #2d3748;">
+            1. Assunto direto mas não alarmista<br>
+            2. Reconhecimento da situação<br>
+            3. Informação de urgência REAL (nunca invente)<br>
+            4. Facilitador de decisão<br>
+            5. CTA claro com deadline
+        </p>
+    </div>
+    
+    <div class="page-number">40</div>
+</div>
+
+<!-- PÁGINA 41 - PROMPT 13 CONTINUAÇÃO -->
+<div class="page">
+    
+    <div style="background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 0 0 15px 0; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.7;">
+        <p style="margin: 0 0 8px 0; color: #084d6e; font-weight: 700;">DIRETRIZES CRÍTICAS:</p>
+        <p style="margin: 0; color: #2d3748;">
+            - NUNCA invente urgência falsa<br>
+            - Se não há deadline real, não use esse prompt<br>
+            - Tom: honesto e direto, não manipulador<br>
+            - Ofereça saída digna: "Entendo se não for o momento"<br>
+            - Máximo 100 palavras
+        </p>
+    </div>
+    
+    <h3>✅ Exemplo de uso</h3>
+    
+    <div style="background: #fff8e6; border-left: 4px solid #daa520; padding: 15px; margin: 15px 0; border-radius: 6px;">
+        <p style="margin: 0 0 10px 0; font-size: 13px; color: #084d6e; font-weight: 700;">ENTRADA:</p>
+        <p style="margin: 0; font-size: 13px; line-height: 1.6; color: #2d3748;">
+            Nome: Rafael | Imóvel: Casa 3Q Bairro Sul<br>
+            Estágio: Visitou 2x, adorou, mas não decidiu<br>
+            Motivo: Indecisão entre essa e outra<br>
+            Urgência real: Proprietário recebeu proposta de outro interessado
+        </p>
+    </div>
+    
+    <div style="background: #e6f7f0; border-left: 4px solid #084d6e; padding: 15px; margin: 15px 0; border-radius: 6px;">
+        <p style="margin: 0 0 10px 0; font-size: 13px; color: #084d6e; font-weight: 700;">SAÍDA DA IA:</p>
+        
+        <p style="margin: 0 0 12px 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>ASSUNTO:</strong> Rafael, preciso de uma resposta até amanhã 🏠
+        </p>
+        
+        <p style="margin: 12px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            Oi Rafael,
+        </p>
+        
+        <p style="margin: 10px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            Vou ser direto: o proprietário recebeu uma proposta formal pela casa ontem à noite. Ele me deu até amanhã (quinta, 16h) pra confirmar se você tem interesse antes de aceitar.
+        </p>
+        
+        <p style="margin: 10px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            Sei que você estava considerando aquela outra também. Nenhum julgamento se você preferir a outra - mas preciso te avisar que essa aqui pode não estar mais disponível depois de amanhã.
+        </p>
+        
+        <p style="margin: 10px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            Se quiser fazer uma proposta, posso te ajudar a montar agora. Se decidiu pela outra, tudo bem também - só me avisa pra eu passar pro proprietário.
+        </p>
+        
+        <p style="margin: 10px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            Me retorna até amanhã 15h?
+        </p>
+        
+        <p style="margin: 10px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            Abraço,<br>
+            [Seu nome]<br>
+            [WhatsApp]
+        </p>
+    </div>
+    
+    <div class="page-number">41</div>
+</div>
+
+<!-- PÁGINA 42 - PROMPT 14 -->
+<div class="page" id="prompt14">
+    <h2>📌 Prompt #14: Análise de concorrência</h2>
+    
+    <div class="highlight-box">
+        <p style="margin: 0;"><strong>Para que serve:</strong> Analisar o que seus concorrentes estão fazendo e encontrar oportunidades de diferenciação.</p>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin: 20px 0;">
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">QUANDO USAR</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px; color: #084d6e; font-weight: 700;">Trimestral</p>
+        </div>
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">TEMPO</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px; color: #084d6e; font-weight: 700;">20 minutos</p>
+        </div>
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">IMPACTO</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px;"><span class="stars">⭐⭐⭐⭐</span> <span style="color: #daa520; font-weight: 700;">(estratégia)</span></p>
+        </div>
+    </div>
+    
+    <h3>🎯 O prompt</h3>
+    
+    <div style="background: linear-gradient(135deg, rgba(8, 77, 110, 0.08) 0%, rgba(218, 165, 32, 0.08) 100%); border: 2px solid #daa520; border-radius: 12px; padding: 20px; margin: 15px 0; box-shadow: 0 4px 15px rgba(218, 165, 32, 0.1);">
+        <div style="background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.7;">
+            <p style="margin: 0 0 12px 0; color: #1a202c;"><strong>Você é um estrategista de marketing digital especializado em análise competitiva.</strong></p>
+            <p style="margin: 0 0 12px 0; color: #1a202c;">Analise os seguintes concorrentes e crie um plano de diferenciação:</p>
+            
+            <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">CONCORRENTES (listar 3-5):</p>
+            <p style="margin: 0 0 12px 0; color: #2d3748; font-size: 12px;">
+                Concorrente 1: [@instagram ou nome] - [seguidores] - [especialidade]<br>
+                Concorrente 2: [@instagram ou nome] - [seguidores] - [especialidade]<br>
+                Concorrente 3: [@instagram ou nome] - [seguidores] - [especialidade]
+            </p>
+            
+            <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">PARA CADA CONCORRENTE, ANALISE:</p>
+            <p style="margin: 0 0 12px 0; color: #2d3748; font-size: 12px;">
+                1. Frequência de postagem<br>
+                2. Tipos de conteúdo que mais engajam<br>
+                3. Tom de comunicação<br>
+                4. Diferenciais apresentados<br>
+                5. Estratégias de captação de leads<br>
+                6. Pontos fracos visíveis
+            </p>
+            
+            <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">DEPOIS, SUGIRA:</p>
+            <p style="margin: 0; color: #2d3748; font-size: 12px;">
+                - 3 oportunidades que posso explorar<br>
+                - 3 diferenciais que posso criar<br>
+                - 1 estratégia para me destacar
+            </p>
+        </div>
+    </div>
+    
+    <div class="page-number">42</div>
+</div>
+
+<!-- PÁGINA 43 -->
+<div class="page">
+    <div style="background: linear-gradient(135deg, rgba(218, 165, 32, 0.15), rgba(255, 215, 0, 0.1)); border: 2px solid rgba(218, 165, 32, 0.4); padding: 16px; border-radius: 10px; text-align: center; margin-bottom: 20px;">
+        <p style="font-size: 14px; margin: 0; line-height: 1.6; font-weight: 600; color: #084d6e;">
+            💡 Dica: Faça essa análise a cada 3 meses. O mercado muda, seus concorrentes evoluem, e você precisa se adaptar constantemente.
+        </p>
+    </div>
+    
+    <h3>📊 Estrutura da análise:</h3>
+    
+    <div style="background: linear-gradient(135deg, rgba(8, 77, 110, 0.08) 0%, rgba(218, 165, 32, 0.08) 100%); border: 2px solid #daa520; border-radius: 12px; padding: 20px; margin: 0 0 20px 0; box-shadow: 0 4px 15px rgba(218, 165, 32, 0.1);">
+        <div style="margin-bottom: 14px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">🎯 Concorrentes:</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">
+                • Escolha 3-5 corretores do seu mercado<br>
+                • Analise tanto os que vendem mais quanto os que têm forte presença digital<br>
+                • Inclua perfis de redes sociais, site e anúncios
+            </p>
+        </div>
+        
+        <div style="margin-bottom: 14px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">🔍 Aspectos a analisar:</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">
+                • <strong>Conteúdo:</strong> O que postam? Com que frequência?<br>
+                • <strong>Engajamento:</strong> Comentários, salvamentos, compartilhamentos<br>
+                • <strong>Posicionamento:</strong> Como se apresentam? Qual o tom de voz?<br>
+                • <strong>Diferenciais:</strong> O que destacam como único?<br>
+                • <strong>Estratégia de vendas:</strong> Como captam e convertem leads?
+            </p>
+        </div>
+        
+        <div style="margin-bottom: 0;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">📋 Entregue:</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">
+                • Matriz SWOT completa por concorrente<br>
+                • Lista de oportunidades não exploradas no mercado<br>
+                • Sugestões de posicionamento diferenciado<br>
+                • Plano de ação com 3 prioridades imediatas
+            </p>
+        </div>
+    </div>
+    
+    <h3>✅ Exemplo de saída (resumido)</h3>
+    
+    <div style="background: #e6f7f0; border-left: 4px solid #084d6e; padding: 15px; margin: 15px 0; border-radius: 6px;">
+        <p style="margin: 0 0 10px 0; font-size: 13px; color: #084d6e; font-weight: 700;">ANÁLISE SWOT - CONCORRENTE A:</p>
+        <p style="margin: 0 0 12px 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>Forças:</strong> 50k seguidores, posts diários, boa produção visual<br>
+            <strong>Fraquezas:</strong> Zero engajamento nos comentários, conteúdo genérico, foca só em venda<br>
+            <strong>Oportunidade para você:</strong> Criar conexão real, responder todos os comentários, conteúdo educativo
+        </p>
+        
+        <p style="margin: 12px 0 8px 0; font-size: 13px; color: #084d6e; font-weight: 700;">GAPS DE MERCADO:</p>
+        <p style="margin: 0 0 12px 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            1. Ninguém fala sobre financiamento de forma clara<br>
+            2. Falta conteúdo para compradores de primeira viagem<br>
+            3. Nenhum concorrente usa vídeos de bastidores humanizados
+        </p>
+    </div>
+    
+    <div class="page-number">43</div>
+</div>
+
+<!-- PÁGINA 44 -->
+<div class="page" id="prompt15">
+    <h3>💡 Quando fazer análise de concorrência</h3>
+    
+    <div style="background: linear-gradient(135deg, rgba(8, 77, 110, 0.05) 0%, rgba(218, 165, 32, 0.05) 100%); border: 2px solid #daa520; border-radius: 12px; padding: 20px; margin: 0 0 20px 0; box-shadow: 0 4px 15px rgba(218, 165, 32, 0.1);">
+        <div style="margin-bottom: 14px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">Trimestral: Revisão completa</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Analise todos os concorrentes, identifique tendências, ajuste estratégia</p>
+        </div>
+        <div style="margin-bottom: 14px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">Mensal: Monitoramento rápido</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Veja posts que viralizaram, conteúdos novos, mudanças de abordagem</p>
+        </div>
+        <div style="margin-bottom: 14px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">Semanal: Inspiração estratégica</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Salve 3-5 posts/ideias para adaptar ao seu estilo</p>
+        </div>
+        <div style="margin-bottom: 0;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">⚠️ Regra de ouro:</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Inspirar-se ≠ Copiar. Adapte ao seu público e adicione sua personalidade única</p>
+        </div>
+    </div>
+    
+    <h2>📌 Prompt #15: Estratégia de conteúdo mensal</h2>
+    
+    <div class="highlight-box">
+        <p style="margin: 0;"><strong>Para que serve:</strong> Criar um plano de conteúdo e ações comerciais completo para o mês, com clareza e foco.</p>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin: 20px 0;">
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">QUANDO USAR</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px; color: #084d6e; font-weight: 700;">Todo início de mês</p>
+        </div>
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">TEMPO</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px; color: #084d6e; font-weight: 700;">30 minutos</p>
+        </div>
+        <div>
+            <p style="margin: 0; font-size: 12px; color: #4a5568; font-weight: 600;">IMPACTO</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px;"><span class="stars">⭐⭐⭐⭐⭐</span> <span style="color: #daa520; font-weight: 700;">(organização)</span></p>
+        </div>
+    </div>
+    
+    <h3>🎯 O prompt</h3>
+    
+    <div style="background: linear-gradient(135deg, rgba(8, 77, 110, 0.08) 0%, rgba(218, 165, 32, 0.08) 100%); border: 2px solid #daa520; border-radius: 12px; padding: 20px; margin: 0 0 20px 0; box-shadow: 0 4px 15px rgba(218, 165, 32, 0.1);">
+        <div style="background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.7;">
+            <p style="margin: 0 0 12px 0; color: #1a202c;"><strong>Você é um estrategista de marketing digital e planejamento comercial para mercado imobiliário.</strong></p>
+            <p style="margin: 0; color: #1a202c;">Crie um plano estratégico completo para o próximo mês:</p>
+        </div>
+    </div>
+    
+    <div class="page-number">44</div>
+</div>
+
+<!-- PÁGINA 45 -->
+<div class="page">
+    <div style="background: linear-gradient(135deg, rgba(8, 77, 110, 0.08) 0%, rgba(218, 165, 32, 0.08) 100%); border: 2px solid #daa520; border-radius: 12px; padding: 20px; margin: 0 0 20px 0; box-shadow: 0 4px 15px rgba(218, 165, 32, 0.1);">
+        <div style="background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.7;">
+            <p style="margin: 0 0 8px 0; color: #084d6e; font-weight: 700;">MEU CONTEXTO ATUAL:</p>
+            <p style="margin: 0 0 12px 0; color: #2d3748; font-size: 12px;">
+                Mês de planejamento: [mês/ano]<br>
+                Meta de vendas: [número de fechamentos ou valor]<br>
+                Imóveis em carteira: [quantidade e tipos]<br>
+                Leads ativos: [quantos prospects]<br>
+                Seguidores atuais: [número nas redes sociais]<br>
+                Maior desafio: [o que está travando]
+            </p>
+            
+            <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">OBJETIVO PRINCIPAL:</p>
+            <p style="margin: 0 0 12px 0; color: #2d3748;">
+                [Aumentar leads/Fechar mais vendas/Construir autoridade/Crescer seguidores]
+            </p>
+            
+            <p style="margin: 12px 0 8px 0; color: #084d6e; font-weight: 700;">CRIE UM PLANO COM:</p>
+            <p style="margin: 0; color: #2d3748;">
+                1. Calendário de conteúdo (28-31 dias de posts)<br>
+                2. Metas semanais específicas e mensuráveis<br>
+                3. Ações comerciais prioritárias<br>
+                4. Estratégias de engajamento<br>
+                5. KPIs para acompanhar
+            </p>
+        </div>
+    </div>
+    
+    <h3>📅 Estrutura do calendário</h3>
+    
+    <div style="background: white; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 0 0 20px 0;">
+        <p style="margin: 0 0 12px 0; font-size: 13px; color: #1a202c; line-height: 1.6;">
+            <strong>Para cada dia útil, especifique:</strong>
+        </p>
+        <div style="margin-left: 15px;">
+            <p style="margin: 5px 0; font-size: 13px; color: #2d3748; line-height: 1.6;">
+                • Tipo de conteúdo (carrossel/legenda/stories/reels)<br>
+                • Tema do post<br>
+                • Objetivo (educar/engajar/vender/construir autoridade)<br>
+                • CTA sugerido
+            </p>
+        </div>
+    </div>
+    
+      
+    <div class="page-number">45</div>
+</div>
+
+<!-- PÁGINA 46 -->
+<div class="page">
+    <h3>✅ Exemplo de saída (Semana 1)</h3>
+    
+    <div style="background: #e6f7f0; border-left: 4px solid #084d6e; padding: 15px; margin: 0 0 15px 0; border-radius: 6px;">
+        <p style="margin: 0 0 10px 0; font-size: 13px; color: #084d6e; font-weight: 700;">SEMANA 1: AQUECIMENTO E CONEXÃO</p>
+        
+        <p style="margin: 0 0 12px 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>Segunda (02/12):</strong><br>
+            Formato: Carrossel educativo (7 slides)<br>
+            Tema: "7 sinais que é hora de trocar de imóvel"<br>
+            Objetivo: Educar + Gerar compartilhamentos<br>
+            CTA: "Salva pra consultar depois"
+        </p>
+        
+        <p style="margin: 12px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>Terça (03/12):</strong><br>
+            Formato: Legenda + foto de imóvel<br>
+            Tema: Destaque apartamento 3Q Bairro X<br>
+            Objetivo: Gerar interesse direto<br>
+            CTA: "Chama no direct pra detalhes"
+        </p>
+    </div>
+    
+    <div style="background: #e6f7f0; border-left: 4px solid #084d6e; padding: 15px; margin: 0 0 15px 0; border-radius: 6px;">
+        <p style="margin: 0 0 12px 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>Quarta (04/12):</strong><br>
+            Formato: Reels 30s<br>
+            Tema: "3 erros ao negociar preço" (formato lista rápida)<br>
+            Objetivo: Viralizar + Posicionar como especialista<br>
+            CTA: "Segue pra mais dicas"
+        </p>
+        
+        <p style="margin: 12px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>Quinta (05/12):</strong><br>
+            Formato: Stories (5 stories sequenciais)<br>
+            Tema: Bastidor de visita + dicas do bairro<br>
+            Objetivo: Humanizar + Mostrar trabalho<br>
+            CTA: Caixinha "Qual bairro você quer conhecer?"
+        </p>
+    </div>
+    
+    <div style="background: #e6f7f0; border-left: 4px solid #084d6e; padding: 15px; margin: 0 0 20px 0; border-radius: 6px;">
+        <p style="margin: 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>Sexta (06/12):</strong><br>
+            Formato: Post dica rápida<br>
+            Tema: "Como calcular o valor do m² na sua região"<br>
+            Objetivo: Educar + Engajamento nos comentários<br>
+            CTA: "Comenta aqui o valor do seu bairro"
+        </p>
+    </div>
+    
+    <h3>📊 Metas semanais mensuráveis</h3>
+    
+    <div style="background: white; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 0;">
+        <p style="margin: 0 0 12px 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>Semana 1:</strong><br>
+            • 5 posts publicados (100% da meta)<br>
+            • 10 novos leads captados via DM<br>
+            • 3 visitas agendadas<br>
+            • 200+ engajamentos totais<br>
+            • Taxa de resposta stories: 15%+
+        </p>
+    </div>
+    
+    <div class="page-number">46</div>
+</div>
+
+<!-- PÁGINA 47 -->
+<div class="page">
+    <div style="background: white; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 0 0 15px 0;">
+        <p style="margin: 0 0 12px 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>Semana 2:</strong><br>
+            • 6 posts (incluindo 1 tour virtual)<br>
+            • 15 follow-ups enviados para leads antigos<br>
+            • 2 propostas formalizadas<br>
+            • 1 depoimento de cliente gravado<br>
+            • +100 seguidores novos
+        </p>
+        
+        <p style="margin: 12px 0 0 0; font-size: 12px; line-height: 1.7; color: #1a202c;">
+            <strong>Semana 3:</strong><br>
+            • 5 posts + 1 live de 30min<br>
+            • 20 conexões proativas (comentar em outros perfis)<br>
+            • 4 visitas realizadas<br>
+            • 1 fechamento<br>
+            • Reels com 5k+ visualizações
+        </p>
+    </div>
+    
+    <h3>🎯 Ações comerciais prioritárias</h3>
+    
+    <div style="background: linear-gradient(135deg, rgba(8, 77, 110, 0.05) 0%, rgba(218, 165, 32, 0.05) 100%); border: 2px solid #daa520; border-radius: 12px; padding: 20px; margin: 0 0 20px 0; box-shadow: 0 4px 15px rgba(218, 165, 32, 0.1);">
+        <div style="margin-bottom: 14px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">Diariamente:</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Responder DMs em até 2h • Interagir com 10 seguidores • 1 follow-up de lead ativo</p>
+        </div>
+        <div style="margin-bottom: 14px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">Semanalmente:</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">3 visitas presenciais • 1 tour virtual gravado • 5 e-mails de reativação • Análise de métricas</p>
+        </div>
+        <div style="margin-bottom: 0;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">Mensalmente:</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Análise concorrência • Revisão carteira • 3 depoimentos clientes • Plano próximo mês</p>
+        </div>
+    </div>
+    
+    <h3>📊 KPIs essenciais</h3>
+    
+    <div style="background: white; border: 2px solid #e2e8f0; border-radius: 10px; padding: 18px; margin: 0;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div>
+                <p style="margin: 0; font-size: 13px; color: #084d6e; font-weight: 700;">Redes Sociais:</p>
+                <p style="margin: 5px 0 0 0; font-size: 12px; color: #2d3748; line-height: 1.6;">
+                    • Alcance total mensal<br>
+                    • Taxa de engajamento (%)<br>
+                    • Crescimento de seguidores<br>
+                    • DMs recebidos<br>
+                    • Salvamentos de posts
+                </p>
+            </div>
+            <div>
+                <p style="margin: 0; font-size: 13px; color: #084d6e; font-weight: 700;">Comercial:</p>
+                <p style="margin: 5px 0 0 0; font-size: 12px; color: #2d3748; line-height: 1.6;">
+                    • Novos leads captados<br>
+                    • Taxa conversão visita→proposta<br>
+                    • Tempo médio fechamento<br>
+                    • Vendas realizadas<br>
+                    • Ticket médio
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="page-number">47</div>
+</div>
+
+<!-- PÁGINA 48 -->
+<div class="page">
+    <h2>💡 Dicas para executar o plano mensal</h2>
+    
+    <div style="background: linear-gradient(135deg, rgba(8, 77, 110, 0.05) 0%, rgba(218, 165, 32, 0.05) 100%); border: 2px solid #daa520; border-radius: 12px; padding: 20px; margin: 0 0 20px 0; box-shadow: 0 4px 15px rgba(218, 165, 32, 0.1);">
+        <div style="margin-bottom: 14px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">1. Grave conteúdo em lote</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Reserve 1 dia para gravar 5-7 vídeos/reels. Poste ao longo da semana. Economiza 70% do tempo.</p>
+        </div>
+        <div style="margin-bottom: 14px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">2. Use ferramenta de agendamento</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Meta Business Suite ou similares. Agende tudo no domingo para a semana. Libera tempo para interagir.</p>
+        </div>
+        <div style="margin-bottom: 14px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">3. Revisite semanalmente</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Toda sexta, revise: o que funcionou? O que ajustar? Seja flexível, não rígido.</p>
+        </div>
+        <div style="margin-bottom: 14px;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">4. Celebre pequenas vitórias</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Post que viralizou? Lead que voltou? Anote e comemore. Motivação é combustível.</p>
+        </div>
+        <div style="margin-bottom: 0;">
+            <p style="margin: 0; font-size: 14px; color: #084d6e; font-weight: 700;">5. Perfeição é inimiga do feito</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #2d3748; line-height: 1.6;">Melhor postar 80% bom hoje que 100% perfeito nunca. Consistência > Perfeição.</p>
+        </div>
+    </div>
+    
+    <h2>🎯 Como usar este kit de forma estratégica</h2>
+    
+    <p class="intro-text">
+        Você acabou de receber 15 ferramentas profissionais de IA. Agora vem a parte mais importante: implementação estratégica.
+    </p>
+    
+    <h3>📅 Plano de implementação (primeiras 4 semanas)</h3>
+    
+    <div style="background: linear-gradient(135deg, rgba(8, 77, 110, 0.08) 0%, rgba(218, 165, 32, 0.08) 100%); border-left: 5px solid #daa520; padding: 20px; margin: 20px 0; border-radius: 10px;">
+        <p style="margin: 0 0 15px 0; font-size: 14px; color: #084d6e; font-weight: 700;">SEMANA 1: FUNDAÇÃO</p>
+        <div class="checklist">
+            <div class="checklist-item">Use Prompt 15 para criar seu plano mensal completo</div>
+            <div class="checklist-item">Teste Prompt 1 em todos os imóveis da sua carteira</div>
+            <div class="checklist-item">Configure Prompt 11 como padrão pós-visita</div>
+            <div class="checklist-item">Meta: 3 prompts dominados</div>
+        </div>
+    </div>
+    
+    <div class="page-number">48</div>
+</div>
+
+<!-- PÁGINA 49 -->
+<div class="page">
+    <div style="background: linear-gradient(135deg, rgba(8, 77, 110, 0.08) 0%, rgba(218, 165, 32, 0.08) 100%); border-left: 5px solid #daa520; padding: 20px; margin: 0 0 20px 0; border-radius: 10px;">
+        <p style="margin: 0 0 15px 0; font-size: 14px; color: #084d6e; font-weight: 700;">SEMANA 2: CONTEÚDO</p>
+        <div class="checklist">
+            <div class="checklist-item">Crie 3 carrosseis com Prompt 4</div>
+            <div class="checklist-item">Grave 2 Reels com Prompt 9</div>
+            <div class="checklist-item">Poste diariamente usando Prompt 5 para legendas</div>
+            <div class="checklist-item">Meta: Estabelecer frequência</div>
+        </div>
+        
+        <p style="margin: 20px 0 15px 0; font-size: 14px; color: #084d6e; font-weight: 700;">SEMANA 3: CONVERSÃO</p>
+        <div class="checklist">
+            <div class="checklist-item">Reative 10 leads frios com Prompt 12</div>
+            <div class="checklist-item">Use Prompt 13 em 2-3 negociações paradas</div>
+            <div class="checklist-item">Grave 1 tour virtual profissional (Prompt 8)</div>
+            <div class="checklist-item">Meta: Gerar resultados tangíveis</div>
+        </div>
+        
+        <p style="margin: 20px 0 15px 0; font-size: 14px; color: #084d6e; font-weight: 700;">SEMANA 4: OTIMIZAÇÃO</p>
+        <div class="checklist">
+            <div class="checklist-item">Análise de concorrência com Prompt 14</div>
+            <div class="checklist-item">Revise métricas e ajuste estratégia</div>
+            <div class="checklist-item">Identifique 3 prompts mais eficazes para você</div>
+            <div class="checklist-item">Meta: Sistema rodando sozinho</div>
+        </div>
+    </div>
+    
+        </div>
+    
+    <div class="page-number">49</div>
+</div>
+
+<!-- PÁGINA 50: DESAFIO 30 DIAS E ENCERRAMENTO -->
+<div class="page">
+     <div style="background: linear-gradient(135deg, rgba(8, 77, 110, 0.08) 0%, rgba(218, 165, 32, 0.08) 100%); border-left: 5px solid #daa520; padding: 25px; margin: 30px 0; border-radius: 10px; box-shadow: 0 4px 15px rgba(218, 165, 32, 0.1);">
+        <p style="margin: 0 0 15px 0; font-size: 16px; color: #084d6e; font-weight: 700; line-height: 1.6;">
+            "O melhor momento para começar foi ontem. O segundo melhor momento é agora."
+        </p>
+        <p style="margin: 0; font-size: 14px; color: #2d3748; line-height: 1.8;">
+            Você tem as ferramentas. Você tem o conhecimento. O que você faz com isso nas próximas 24 horas vai definir os próximos 24 meses da sua carreira.
+        </p>
+    </div>
+    
+    <h3>🎯 O desafio dos 30 dias</h3>
+    
+    <p style="font-size: 15px; line-height: 1.9; color: #1a202c; margin: 20px 0;">
+        Te desafio: use este kit consistentemente por 30 dias. Não precisa ser perfeito. Apenas consistente.
+    </p>
+    
+    <div class="checklist" style="margin: 20px 0;">
+        <div class="checklist-item">Use pelo menos 3 prompts por semana</div>
+        <div class="checklist-item">Poste conteúdo 4x por semana no mínimo</div>
+        <div class="checklist-item">Envie follow-ups para 100% das visitas</div>
+        <div class="checklist-item">Reative pelo menos 10 leads antigos</div>
+        <div class="checklist-item">Grave 1 tour virtual profissional</div>
+    </div>
+    
+    <p style="font-size: 15px; line-height: 1.9; color: #1a202c; margin: 25px 0;">
+        Depois de 30 dias, você vai olhar pra trás e não vai acreditar no quanto evoluiu. Sua comunicação será mais profissional. Seus leads vão responder mais. Suas vendas vão fluir melhor.
+    </p>
+    
+    <div style="background: linear-gradient(135deg, #000000 0%, #084d6e 100%); color: white; padding: 30px; border-radius: 12px; margin: 30px 0; text-align: center; box-shadow: 0 8px 25px rgba(8, 77, 110, 0.4);">
+        <p style="margin: 0 0 15px 0; font-size: 28px; font-weight: 900; color: #daa520; letter-spacing: -0.5px;">
+            Você está pronto.
+        </p>
+        <p style="margin: 0; font-size: 16px; line-height: 1.8; color: rgba(255,255,255,0.95);">
+            Agora vai lá e mostra do que você é capaz.
+        </p>
+    </div>
+    
+    <div class="page-number">50</div>
+</div>
+
+<!-- PÁGINA 51: PÁGINA FINAL -->
+<div class="page" style="background: linear-gradient(135deg, #000000 0%, #084d6e 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; color: white;">
+    
+    <div style="text-align: center; padding: 0 60px;">
+        <div style="margin-bottom: 40px;">
+            <img src="https://redattolab.com.br/wp-content/uploads/2025/09/RedattoLAB-400-x-150-px.png" alt="RedattoLAB" style="height: 80px; width: auto; filter: drop-shadow(0 6px 20px rgba(0,0,0,0.5));">
+        </div>
+        
+        <div style="font-size: 70px; margin-bottom: 35px; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));">
+            🚀
+        </div>
+        
+        <h1 style="font-size: 48px; font-weight: 900; margin-bottom: 25px; line-height: 1.2; text-shadow: 0 4px 15px rgba(0,0,0,0.3); letter-spacing: -1px; color: white;">
+            Agora é com você!
+        </h1>
+        
+        <p style="font-size: 20px; line-height: 1.7; margin-bottom: 50px; opacity: 0.95; color: rgba(255,255,255,0.95);">
+            Use este material, evolua, cresça e venda mais.<br>
+            Seu sucesso é a nossa missão.
+        </p>
+        
+        <div style="width: 200px; height: 3px; background: linear-gradient(90deg, transparent, #daa520, transparent); margin: 50px auto;"></div>
+        
+        <div style="margin-top: 50px;">
+            <p style="font-size: 17px; font-weight: 600; margin-bottom: 15px; color: #daa520; letter-spacing: 0.5px;">
+                CRIADO POR
+            </p>
+            <p style="font-size: 32px; font-weight: 900; margin-bottom: 10px; color: white; text-shadow: 0 2px 8px rgba(0,0,0,0.3);">
+                RedattoLAB
+            </p>
+            <p style="font-size: 16px; opacity: 0.85; margin-bottom: 35px; color: rgba(255,255,255,0.9);">
+                Transformando corretores em especialistas digitais
+            </p>
+            
+            <div style="margin-top: 40px; padding-top: 35px; border-top: 2px solid rgba(218, 165, 32, 0.3);">
+                <p style="font-size: 15px; opacity: 0.75; margin-bottom: 8px; color: rgba(255,255,255,0.8);">
+                    Conecte-se conosco
+                </p>
+                <p style="font-size: 18px; font-weight: 600; color: #daa520; letter-spacing: 1px;">
+                    @redattolab
+                </p>
+            </div>
+        </div>
+        
+        <div style="position: absolute; bottom: 40px; left: 0; right: 0; text-align: center;">
+            <p style="font-size: 13px; opacity: 0.6; color: rgba(255,255,255,0.7);">
+                © 2026 RedattoLAB - Todos os direitos reservados
+            </p>
+            <p style="font-size: 12px; opacity: 0.5; margin-top: 8px; color: rgba(255,255,255,0.6);">
+                Kit Corretor Digital 2026 | Edição Premium
+            </p>
+        </div>
+    </div>
+    
+</div>
